@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Aira Group · Automação de WhatsApp para profissionais de saúde da Baixada Santista. Marque, cancele e confirme consultas automaticamente.">
-<title>Aira Group · Automação de WhatsApp para profissionais de saúde</title>
+<meta name="description" content="Aira Group · Automação de WhatsApp para empresas no Brasil. Marque, cancele e confirme atendimentos automaticamente.">
+<title>Aira Group · Automação de WhatsApp para o seu negócio</title>
+<link rel="icon" type="image/jpeg" href="Logo_Aira_Insta.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -56,16 +57,29 @@
   .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .logo-mark {
     width: 38px; height: 38px;
-    background: var(--gradient-brand);
-    border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-family: 'Sora', sans-serif; font-weight: 800; font-size: 18px;
-    letter-spacing: -0.04em;
+    border-radius: 50%;
+    overflow: hidden;
+    background: white;
+    flex-shrink: 0;
+    display: block;
   }
+  .logo-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .logo-text { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 18px; color: var(--slate); letter-spacing: -0.01em; }
   .nav-links { display: flex; gap: 32px; align-items: center; }
   .nav-links a { color: var(--slate-light); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover { color: var(--teal-blue); }
+  .nav-actions { display: flex; gap: 12px; align-items: center; }
+  .nav-social {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gray-line);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--slate-light);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .nav-social:hover { border-color: var(--teal-blue); color: var(--teal-blue); transform: translateY(-1px); }
+  .nav-social svg { width: 18px; height: 18px; }
   .nav-cta {
     background: var(--slate); color: white;
     padding: 10px 20px; border-radius: 999px;
@@ -235,10 +249,13 @@
   .wa-avatar {
     width: 36px; height: 36px;
     border-radius: 50%;
-    background: var(--gradient-brand);
+    background: white;
+    overflow: hidden;
     display: flex; align-items: center; justify-content: center;
     font-weight: 700; font-size: 14px; color: white;
+    flex-shrink: 0;
   }
+  .wa-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .wa-name { font-size: 14px; font-weight: 600; }
   .wa-status { font-size: 11px; opacity: 0.85; }
   .wa-chat {
@@ -439,8 +456,10 @@
     transition: all 0.2s;
     color: var(--slate);
   }
+  .demo-form input.full-width { grid-column: span 2; }
   .demo-form input:focus { outline: none; border-color: var(--teal-blue); box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
   .demo-form input::placeholder { color: var(--gray-soft); }
+  .demo-form input.highlight-custom { border-color: var(--innovation-green); background: rgba(0,230,118,0.04); }
   .demo-stage {
     background: var(--slate);
     color: white;
@@ -578,10 +597,20 @@
   .demo-btn-play:hover { background: var(--teal-blue); }
   .demo-btn-play:disabled { opacity: 0.6; cursor: wait; }
   
+  .demo-hint {
+    font-size: 12px;
+    color: var(--innovation-green-dark);
+    margin: -10px 0 16px;
+    display: none;
+    font-weight: 500;
+  }
+  .demo-hint.show { display: block; }
+  
   @media (max-width: 768px) {
     .demo-card { padding: 24px; }
     .demo-tabs { grid-template-columns: repeat(2, 1fr); }
     .demo-form { grid-template-columns: 1fr; }
+    .demo-form input.full-width { grid-column: span 1; }
     .demo-scenarios { grid-template-columns: 1fr; }
   }
   
@@ -708,6 +737,10 @@
     margin-left: auto; margin-right: auto;
     position: relative; z-index: 1;
   }
+  .cta-final-buttons {
+    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
   .cta-final-btn {
     display: inline-flex; align-items: center; gap: 8px;
     background: white;
@@ -718,9 +751,14 @@
     font-weight: 700;
     font-size: 16px;
     transition: all 0.2s;
-    position: relative; z-index: 1;
   }
   .cta-final-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -8px rgba(0,0,0,0.2); }
+  .cta-final-btn.outline {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+  }
+  .cta-final-btn.outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
   
   /* ============ FOOTER ============ */
   footer { background: var(--bg-darkest); color: rgba(255,255,255,0.6); padding: 60px 0 30px; }
@@ -731,8 +769,19 @@
     margin-bottom: 40px;
   }
   footer .logo-text { color: white; }
-  footer .logo-mark { width: 36px; height: 36px; font-size: 16px; }
+  footer .logo-mark { width: 36px; height: 36px; }
   .footer-tag { margin-top: 16px; font-size: 14px; line-height: 1.6; max-width: 280px; }
+  .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+  .footer-social a {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.7);
+    transition: all 0.2s;
+  }
+  .footer-social a:hover { background: var(--gradient-brand); color: white; transform: translateY(-2px); }
+  .footer-social svg { width: 16px; height: 16px; }
   .footer-col h4 { color: white; font-size: 14px; margin-bottom: 16px; font-family: 'Sora', sans-serif; }
   .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; padding: 6px 0; font-size: 14px; transition: color 0.2s; }
   .footer-col a:hover { color: var(--innovation-green); }
@@ -754,13 +803,13 @@
 </style>
 </head>
 <body>
-<h2 class="sr-only">Aira Group: site institucional com demonstração interativa do produto de automação de WhatsApp para profissionais de saúde.</h2>
+<h2 class="sr-only">Aira Group: site institucional com demonstração interativa do produto de automação de WhatsApp para empresas.</h2>
 
 <!-- NAV -->
 <nav>
   <div class="container">
     <a href="#" class="logo">
-      <div class="logo-mark">A</div>
+      <span class="logo-mark"><img src="Logo_Aira_Insta.jpeg" alt="Aira Group"></span>
       <div class="logo-text">Aira Group</div>
     </a>
     <div class="nav-links">
@@ -770,9 +819,18 @@
       <a href="#planos">Planos</a>
       <a href="#faq">Dúvidas</a>
     </div>
-    <a href="https://wa.me/5513981523082" class="nav-cta" target="_blank" rel="noopener">
-      Falar conosco →
-    </a>
+    <div class="nav-actions">
+      <a href="https://www.instagram.com/aira.solutions/" class="nav-social" target="_blank" rel="noopener" aria-label="Instagram da Aira Group">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </a>
+      <a href="https://wa.me/5513981523082" class="nav-cta" target="_blank" rel="noopener">
+        Falar conosco →
+      </a>
+    </div>
   </div>
 </nav>
 
@@ -783,11 +841,11 @@
       <div>
         <div class="badge-pill">
           <span class="badge-pulse"></span>
-          Atendendo profissionais da Baixada Santista
+          Atendendo empresas e profissionais no Brasil
         </div>
-        <h1>O WhatsApp do seu consultório <span class="highlight">funcionando sozinho.</span></h1>
+        <h1>O WhatsApp do seu negócio <span class="highlight">funcionando sozinho.</span></h1>
         <p class="hero-subtitle">
-          Automação que marca, cancela, reagenda e responde dúvidas dos seus pacientes sem você parar o atendimento. Integração nativa com Google Agenda. Setup em 48 horas.
+          Automação que marca, cancela, reagenda e responde dúvidas dos seus clientes sem você parar o que está fazendo. Integração nativa com Google Agenda. Setup em 48 horas.
         </p>
         <div class="hero-cta">
           <a href="#demo" class="btn-primary">
@@ -807,8 +865,8 @@
             <span>Sem fidelidade</span>
           </div>
           <div class="trust-item">
-            <div class="trust-icon">📍</div>
-            <span>Suporte local</span>
+            <div class="trust-icon">💬</div>
+            <span>Suporte humano</span>
           </div>
         </div>
       </div>
@@ -817,17 +875,17 @@
           <div class="phone-screen">
             <div class="phone-notch"></div>
             <div class="wa-header">
-              <div class="wa-avatar">DM</div>
+              <div class="wa-avatar"><img src="Logo_Aira_Insta.jpeg" alt="Aira"></div>
               <div>
-                <div class="wa-name">Dra. Marina Silva</div>
+                <div class="wa-name">Atendimento Aira</div>
                 <div class="wa-status">online agora</div>
               </div>
             </div>
             <div class="wa-chat">
-              <div class="wa-bubble in" style="animation-delay: 0.3s;">Oi, quero marcar uma consulta 🙂<span class="time">14:23</span></div>
+              <div class="wa-bubble in" style="animation-delay: 0.3s;">Oi, quero agendar um horário 🙂<span class="time">14:23</span></div>
               <div class="wa-bubble out" style="animation-delay: 0.8s;">Olá! 👋 Tenho esses horários:<br>1️⃣ Quinta 08/05 — 14h<br>2️⃣ Sexta 09/05 — 10h<br>3️⃣ Segunda 12/05 — 16h<span class="time">14:23</span></div>
               <div class="wa-bubble in" style="animation-delay: 1.4s;">Pode ser opção 2!<span class="time">14:24</span></div>
-              <div class="wa-bubble out" style="animation-delay: 2.0s;">✅ Confirmado!<br>📅 Sexta 09/05 às 10h<br>📍 Av. Ana Costa, 100<br>💰 R$ 250<br><br>Te mando lembrete 24h antes 😊<span class="time">14:24</span></div>
+              <div class="wa-bubble out" style="animation-delay: 2.0s;">✅ Confirmado!<br>📅 Sexta 09/05 às 10h<br>📍 Endereço enviado por aqui<br>💰 R$ 250<br><br>Te mando lembrete 24h antes 😊<span class="time">14:24</span></div>
             </div>
           </div>
         </div>
@@ -837,7 +895,7 @@
         </div>
         <div class="floating-card f2">
           <div class="fc-icon">⏰</div>
-          <div class="fc-text"><strong>Lembrete enviado</strong><span>24h antes da consulta</span></div>
+          <div class="fc-text"><strong>Lembrete enviado</strong><span>24h antes do horário</span></div>
         </div>
         <div class="floating-card f3">
           <div class="fc-icon">↓</div>
@@ -853,24 +911,24 @@
   <div class="container">
     <div class="section-header">
       <div class="section-tag">O problema</div>
-      <h2>Você é profissional, não secretária.</h2>
-      <p>Mas hoje seu WhatsApp está cheio de mensagens repetidas, agendas conflitando e pacientes que faltam sem avisar.</p>
+      <h2>Você toca o negócio, não a recepção.</h2>
+      <p>Mas hoje seu WhatsApp está cheio de mensagens repetidas, agendas conflitando e gente que confirma e some.</p>
     </div>
     <div class="problems-grid">
       <div class="problem-card">
         <div class="problem-icon">⏱️</div>
         <h3>2 horas por dia perdidas</h3>
-        <p>Respondendo as mesmas perguntas: "qual o endereço?", "quanto custa?", "tem horário?". Você atende ou marca consulta — não dá pra fazer os dois bem.</p>
+        <p>Respondendo as mesmas perguntas: "qual o endereço?", "quanto custa?", "tem horário?". Você atende clientes ou marca agenda — não dá pra fazer os dois bem.</p>
       </div>
       <div class="problem-card">
         <div class="problem-icon">📉</div>
-        <h3>30-40% de no-show</h3>
-        <p>Paciente esquece, não recebe lembrete, ou simplesmente não aparece. Cada falta é uma hora morta na sua agenda — e dinheiro que não volta.</p>
+        <h3>30-40% de faltas e cancelamentos</h3>
+        <p>O cliente esquece, não recebe lembrete, ou simplesmente não aparece. Cada falta é uma hora morta na sua agenda — e dinheiro que não volta.</p>
       </div>
       <div class="problem-card">
         <div class="problem-icon">😵</div>
         <h3>Agenda bagunçada</h3>
-        <p>Conflito de horário, marcação duplicada, paciente reclamando que não foi avisado da remarcação. Falta de profissionalismo que afasta cliente bom.</p>
+        <p>Conflito de horário, marcação duplicada, cliente reclamando que não foi avisado da remarcação. Falta de profissionalismo que afasta o cliente bom.</p>
       </div>
     </div>
   </div>
@@ -882,13 +940,13 @@
     <div class="section-header">
       <div class="section-tag">Como funciona</div>
       <h2>Configura em 48 horas. Você não mexe em nada.</h2>
-      <p>A gente cuida de toda parte técnica. Você continua usando o mesmo número de WhatsApp, com o mesmo Google Agenda. A diferença é que agora ele responde sozinho.</p>
+      <p>A gente cuida de toda a parte técnica. Você continua usando o mesmo número de WhatsApp, com o mesmo Google Agenda. A diferença é que agora ele responde sozinho.</p>
     </div>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <h3>Conversa inicial</h3>
-        <p>15 minutos por vídeo ou presencial. Entendemos seu fluxo, dúvidas frequentes, valores e horários.</p>
+        <p>15 minutos por vídeo. Entendemos seu fluxo, dúvidas frequentes, valores e horários.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -903,7 +961,7 @@
       <div class="step">
         <div class="step-num">4</div>
         <h3>No ar</h3>
-        <p>Bot 24/7 marcando, cancelando, reagendando e enviando lembretes. Suporte local sempre que precisar.</p>
+        <p>Bot 24/7 marcando, cancelando, reagendando e enviando lembretes. Suporte humano sempre que precisar.</p>
       </div>
     </div>
   </div>
@@ -914,35 +972,37 @@
   <div class="container">
     <div class="section-header">
       <div class="section-tag">Demonstração ao vivo</div>
-      <h2>Veja seu consultório funcionando.</h2>
-      <p>Coloque o nome da sua clínica abaixo e veja como o atendimento aconteceria. É exatamente assim que seus pacientes seriam atendidos.</p>
+      <h2>Veja seu negócio funcionando.</h2>
+      <p>Escolha o tipo de negócio, coloque o nome da sua empresa e veja como o atendimento aconteceria. É exatamente assim que seus clientes seriam atendidos.</p>
     </div>
     <div class="demo-card">
       <div class="demo-controls">
-        <p style="font-size: 12px; font-weight: 600; color: var(--gray-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;">1. Seu nicho</p>
+        <p style="font-size: 12px; font-weight: 600; color: var(--gray-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;">1. Tipo de negócio</p>
         <div class="demo-tabs" id="dt-tabs">
-          <button class="demo-tab active" data-niche="nutri"><i class="ti">🥗</i>Nutricionista</button>
-          <button class="demo-tab" data-niche="estetica"><i class="ti">✨</i>Estética</button>
-          <button class="demo-tab" data-niche="fisio"><i class="ti">🧘</i>Fisioterapia</button>
-          <button class="demo-tab" data-niche="advocacia"><i class="ti">⚖️</i>Advocacia</button>
+          <button class="demo-tab active" data-niche="saude"><i class="ti">💆</i>Saúde & Estética</button>
+          <button class="demo-tab" data-niche="imobiliaria"><i class="ti">🏗️</i>Imobiliária / Construtora</button>
+          <button class="demo-tab" data-niche="condominio"><i class="ti">🏢</i>Condomínio / Síndico</button>
+          <button class="demo-tab" data-niche="outro"><i class="ti">✏️</i>Outro (personalizar)</button>
         </div>
         <p style="font-size: 12px; font-weight: 600; color: var(--gray-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;">2. Personalize</p>
         <div class="demo-form">
-          <input type="text" id="dt-clinica" placeholder="Nome da clínica">
-          <input type="text" id="dt-prof" placeholder="Nome do profissional">
+          <input type="text" id="dt-clinica" placeholder="Nome da empresa">
+          <input type="text" id="dt-prof" placeholder="Nome do responsável">
           <input type="text" id="dt-cidade" placeholder="Cidade">
-          <input type="text" id="dt-valor" placeholder="Valor (ex: R$ 250)">
+          <input type="text" id="dt-valor" placeholder="Valor (ex: R$ 250 ou Gratuito)">
+          <input type="text" id="dt-servico" class="full-width" placeholder="Tipo de serviço/atendimento (opcional — sobrescreve o padrão)">
         </div>
+        <p class="demo-hint" id="dt-hint">💡 Você escolheu "Outro". Preencha o campo de serviço acima para personalizar.</p>
       </div>
       <div class="demo-stage">
-        <span class="demo-stage-name" id="dt-stage-name">Clínica de Nutrição — Dra. Ana Lima</span>
-        <span class="demo-stage-tag" id="dt-stage-tag">NUTRIÇÃO</span>
+        <span class="demo-stage-name" id="dt-stage-name">Clínica Estética Bem-Estar — Dra. Júlia Reis</span>
+        <span class="demo-stage-tag" id="dt-stage-tag">SAÚDE & ESTÉTICA</span>
       </div>
       <div class="demo-phone">
         <div class="demo-phone-header">
-          <div class="demo-phone-avatar" id="dt-avatar">AL</div>
+          <div class="demo-phone-avatar" id="dt-avatar">JR</div>
           <div>
-            <div class="demo-phone-name" id="dt-phone-name">Clínica Dra. Ana Lima</div>
+            <div class="demo-phone-name" id="dt-phone-name">Clínica Estética Bem-Estar · Dra. Júlia Reis</div>
             <div class="demo-phone-status">online agora</div>
           </div>
         </div>
@@ -958,7 +1018,7 @@
       <div class="demo-scenarios" id="dt-scen">
         <button class="demo-scenario active" data-scenario="confirma">Confirmação 24h</button>
         <button class="demo-scenario" data-scenario="cancela">Cancelamento</button>
-        <button class="demo-scenario" data-scenario="novo">Novo paciente</button>
+        <button class="demo-scenario" data-scenario="novo">Novo cliente</button>
       </div>
       <div class="demo-actions">
         <button class="demo-btn-reset" id="dt-reset">↻ Reiniciar</button>
@@ -981,7 +1041,7 @@
         <div class="price-name">Essencial</div>
         <div class="price-amount"><span class="currency">R$</span>247<span class="period">/mês</span></div>
         <div class="price-setup">Setup único: R$ 497</div>
-        <p class="price-target">Para profissional autônomo: nutricionista, fisioterapeuta, esteticista solo, advogado pequeno.</p>
+        <p class="price-target">Para profissional autônomo ou pequeno negócio começando agora: estética, fisioterapia, advocacia, corretor de imóveis solo.</p>
         <ul class="price-features">
           <li>Até 80 atendimentos/mês</li>
           <li>Agendamento automático</li>
@@ -998,11 +1058,11 @@
         <div class="price-name">Profissional</div>
         <div class="price-amount"><span class="currency">R$</span>497<span class="period">/mês</span></div>
         <div class="price-setup">Setup único: R$ 997</div>
-        <p class="price-target">Para clínicas pequenas (2-3 profissionais) ou autônomos com volume alto de pacientes.</p>
+        <p class="price-target">Para pequenas empresas (2-3 pessoas), imobiliárias, escritórios e clínicas com volume alto de atendimentos.</p>
         <ul class="price-features">
           <li>80 a 200 atendimentos/mês</li>
           <li>Tudo do plano Essencial</li>
-          <li>Multi-profissional (até 3)</li>
+          <li>Multi-responsável (até 3)</li>
           <li>Relatório mensal</li>
           <li>Personalização avançada</li>
           <li>Disparo de mensagens em massa</li>
@@ -1014,13 +1074,13 @@
         <div class="price-name">Premium</div>
         <div class="price-amount"><span class="currency">R$</span>897<span class="period">/mês</span></div>
         <div class="price-setup">Setup único: R$ 1.997</div>
-        <p class="price-target">Para clínicas multi-profissional ou estética com pacotes recorrentes e alto volume.</p>
+        <p class="price-target">Para construtoras, redes de clínicas, condomínios e empresas com alta demanda ou múltiplas operações.</p>
         <ul class="price-features">
           <li>200+ atendimentos/mês</li>
           <li>Tudo do plano Profissional</li>
-          <li>Multi-profissional ilimitado</li>
+          <li>Multi-responsável ilimitado</li>
           <li>Dashboard customizado</li>
-          <li>Recuperação de pacientes inativos</li>
+          <li>Recuperação de clientes inativos</li>
           <li>Integração com sistemas externos</li>
           <li>Suporte dedicado</li>
         </ul>
@@ -1039,16 +1099,20 @@
     </div>
     <div class="faq-list">
       <div class="faq-item">
-        <div class="faq-q">O paciente percebe que está falando com um robô?<span class="faq-q-icon">+</span></div>
-        <div class="faq-a">Geralmente não. Configuramos o tom de voz para imitar como você ou sua secretária responderia. E quando ele faz uma pergunta complexa que o bot não consegue resolver, transferimos automaticamente para você.</div>
+        <div class="faq-q">O cliente percebe que está falando com um robô?<span class="faq-q-icon">+</span></div>
+        <div class="faq-a">Geralmente não. Configuramos o tom de voz para imitar como você ou sua equipe responderia. E quando ele faz uma pergunta complexa que o bot não consegue resolver, transferimos automaticamente para você.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Preciso trocar meu número de WhatsApp?<span class="faq-q-icon">+</span></div>
-        <div class="faq-a">Não. Você continua usando o mesmo número que seus pacientes já conhecem. A gente conecta o nosso sistema ao seu WhatsApp atual.</div>
+        <div class="faq-a">Não. Você continua usando o mesmo número que seus clientes já conhecem. A gente conecta o nosso sistema ao seu WhatsApp atual.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">E se eu quiser responder pessoalmente?<span class="faq-q-icon">+</span></div>
         <div class="faq-a">Sempre que quiser, você abre o WhatsApp e responde direto. O bot detecta a resposta humana e para de atender aquela conversa, deixando você no controle.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Funciona para qualquer tipo de negócio?<span class="faq-q-icon">+</span></div>
+        <div class="faq-a">Sim. Hoje atendemos clínicas, estética, fisioterapia, imobiliárias, construtoras, síndicos de condomínio, advocacia e escritórios em geral. Se seu negócio agenda atendimentos ou responde dúvidas pelo WhatsApp, a solução serve.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Tem fidelidade ou multa de cancelamento?<span class="faq-q-icon">+</span></div>
@@ -1060,11 +1124,11 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">Funciona com qual sistema de agendamento?<span class="faq-q-icon">+</span></div>
-        <div class="faq-a">Google Agenda nativamente. Outros sistemas (Doctoralia, GestãoDS, sistemas próprios) podemos integrar no plano Premium.</div>
+        <div class="faq-a">Google Agenda nativamente. Outros sistemas (Doctoralia, GestãoDS, sistemas próprios, ERPs) podemos integrar no plano Premium.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">Vocês são da Baixada Santista mesmo?<span class="faq-q-icon">+</span></div>
-        <div class="faq-a">Sim, somos sediados em Santos. Atendimento e suporte 100% locais. Se preferir, fazemos a configuração inicial presencialmente no seu consultório.</div>
+        <div class="faq-q">Vocês atendem em todo o Brasil?<span class="faq-q-icon">+</span></div>
+        <div class="faq-a">Sim. Todo o processo de configuração, testes e suporte é feito remotamente, por vídeo e WhatsApp. Atendemos clientes em qualquer estado do Brasil.</div>
       </div>
     </div>
   </div>
@@ -1075,9 +1139,14 @@
   <div class="container">
     <h2>Comece com 30 dias de teste.</h2>
     <p>Sem fidelidade, sem letra miúda. Se não for o que você espera, devolvemos seu dinheiro.</p>
-    <a href="https://wa.me/5513981523082?text=Quero%20conhecer%20a%20Aira%20Group" class="cta-final-btn" target="_blank">
-      Falar com a Aira no WhatsApp →
-    </a>
+    <div class="cta-final-buttons">
+      <a href="https://wa.me/5513981523082?text=Quero%20conhecer%20a%20Aira%20Group" class="cta-final-btn" target="_blank">
+        Falar com a Aira no WhatsApp →
+      </a>
+      <a href="https://www.instagram.com/aira.solutions/" class="cta-final-btn outline" target="_blank">
+        Seguir no Instagram
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1087,10 +1156,24 @@
     <div class="footer-grid">
       <div>
         <a href="#" class="logo">
-          <div class="logo-mark">A</div>
+          <span class="logo-mark"><img src="Logo_Aira_Insta.jpeg" alt="Aira Group"></span>
           <div class="logo-text">Aira Group</div>
         </a>
-        <p class="footer-tag">Automação de WhatsApp para profissionais de saúde da Baixada Santista. Tecnologia que devolve seu tempo.</p>
+        <p class="footer-tag">Automação de WhatsApp para empresas e profissionais no Brasil. Tecnologia que devolve seu tempo.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/aira.solutions/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/5513981523082" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+            </svg>
+          </a>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Produto</h4>
@@ -1104,6 +1187,7 @@
         <a href="#">Sobre nós</a>
         <a href="#faq">Dúvidas</a>
         <a href="https://wa.me/5513981523082">Contato</a>
+        <a href="https://www.instagram.com/aira.solutions/" target="_blank" rel="noopener">Instagram</a>
       </div>
       <div class="footer-col">
         <h4>Legal</h4>
@@ -1113,8 +1197,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Aira Group · Santos, SP</span>
-      <span>CNPJ em registro</span>
+      <span>© 2026 Aira Group · Brasil</span>
+      <span>CNPJ 66.695.299/0001-54</span>
     </div>
   </div>
 </footer>
@@ -1130,13 +1214,41 @@ document.querySelectorAll('.faq-item').forEach(item => {
 // DEMO interativa
 (function(){
   const NICHES = {
-    nutri:     { label: 'NUTRIÇÃO', clinica: 'Clínica de Nutrição', prof: 'Dra. Ana Lima', valor: 'R$ 250', servico: 'consulta nutricional' },
-    estetica:  { label: 'ESTÉTICA', clinica: 'Clínica de Estética', prof: 'Dra. Júlia Reis', valor: 'R$ 380', servico: 'sessão de limpeza de pele' },
-    fisio:     { label: 'FISIOTERAPIA', clinica: 'Studio de Fisioterapia', prof: 'Dra. Carla Souza', valor: 'R$ 180', servico: 'sessão de fisioterapia' },
-    advocacia: { label: 'ADVOCACIA', clinica: 'Escritório de Advocacia', prof: 'Dr. Marcelo Couto', valor: 'R$ 350', servico: 'consulta jurídica' }
+    saude: {
+      label: 'SAÚDE & ESTÉTICA',
+      clinica: 'Clínica Estética Bem-Estar',
+      prof: 'Dra. Júlia Reis',
+      valor: 'R$ 380',
+      servico: 'sessão de limpeza de pele',
+      cidade: 'São Paulo'
+    },
+    imobiliaria: {
+      label: 'IMOBILIÁRIA',
+      clinica: 'Imobiliária Vista',
+      prof: 'Marcelo Couto',
+      valor: 'Sem custo',
+      servico: 'visita ao imóvel',
+      cidade: 'Rio de Janeiro'
+    },
+    condominio: {
+      label: 'CONDOMÍNIO',
+      clinica: 'Edifício Aurora',
+      prof: 'Carlos Mendes (Síndico)',
+      valor: 'Sem custo',
+      servico: 'reserva do salão de festas',
+      cidade: 'Belo Horizonte'
+    },
+    outro: {
+      label: 'PERSONALIZADO',
+      clinica: 'Seu Negócio',
+      prof: 'Responsável',
+      valor: 'R$ 200',
+      servico: 'atendimento',
+      cidade: 'Brasil'
+    }
   };
 
-  let currentNiche = 'nutri';
+  let currentNiche = 'saude';
   let currentScenario = 'confirma';
   let playing = false;
   let timeouts = [];
@@ -1147,6 +1259,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
   const $prof = document.getElementById('dt-prof');
   const $cidade = document.getElementById('dt-cidade');
   const $valor = document.getElementById('dt-valor');
+  const $servico = document.getElementById('dt-servico');
   const $stageName = document.getElementById('dt-stage-name');
   const $stageTag = document.getElementById('dt-stage-tag');
   const $phoneName = document.getElementById('dt-phone-name');
@@ -1154,21 +1267,22 @@ document.querySelectorAll('.faq-item').forEach(item => {
   const $chat = document.getElementById('dt-chat');
   const $play = document.getElementById('dt-play');
   const $reset = document.getElementById('dt-reset');
+  const $hint = document.getElementById('dt-hint');
 
   function getData(){
     const n = NICHES[currentNiche];
     return {
       clinica: $clinica.value.trim() || n.clinica,
       prof: $prof.value.trim() || n.prof,
-      cidade: $cidade.value.trim() || 'Santos',
+      cidade: $cidade.value.trim() || n.cidade,
       valor: $valor.value.trim() || n.valor,
-      servico: n.servico,
+      servico: $servico.value.trim() || n.servico,
       label: n.label
     };
   }
 
   function getInitials(name){
-    const clean = name.replace(/^(Dra?\.?|Dr\.?)\s+/i, '').trim();
+    const clean = name.replace(/^(Dra?\.?|Dr\.?|Sr\.?|Sra\.?)\s+/i, '').replace(/\(.*?\)/g, '').trim();
     const parts = clean.split(/\s+/).filter(Boolean);
     if(parts.length === 0) return '··';
     if(parts.length === 1) return parts[0].slice(0,2).toUpperCase();
@@ -1181,6 +1295,15 @@ document.querySelectorAll('.faq-item').forEach(item => {
     $stageTag.textContent = d.label;
     $phoneName.textContent = `${d.clinica} · ${d.prof}`;
     $avatar.textContent = getInitials(d.prof);
+
+    // Highlight do campo de serviço quando "Outro" é selecionado
+    if(currentNiche === 'outro'){
+      $servico.classList.add('highlight-custom');
+      $hint.classList.add('show');
+    } else {
+      $servico.classList.remove('highlight-custom');
+      $hint.classList.remove('show');
+    }
   }
 
   $tabs.forEach(t => t.addEventListener('click', () => {
@@ -1198,7 +1321,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
     resetChat();
   }));
 
-  [$clinica, $prof, $cidade, $valor].forEach(inp => inp.addEventListener('input', updateUI));
+  [$clinica, $prof, $cidade, $valor, $servico].forEach(inp => inp.addEventListener('input', updateUI));
 
   function nowTime(){
     return new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
@@ -1254,15 +1377,15 @@ document.querySelectorAll('.faq-item').forEach(item => {
     await addBubble('1', 'in', 1500);
     removeTyping();
     await showTyping(800);
-    await addBubble(`Perfeito! ✅ Sua ${d.servico} está confirmada para amanhã às 14h. Te esperamos! 😊<br><br>📍 Av. Ana Costa, 100 — ${d.cidade}`, 'out', 1400);
+    await addBubble(`Perfeito! ✅ Sua ${d.servico} está confirmada para amanhã às 14h. Te esperamos! 😊<br><br>📍 ${d.cidade} (endereço completo enviado por aqui)`, 'out', 1400);
     removeTyping();
   }
 
   async function playCancela(){
     const d = getData();
-    await addBubble('Oi, preciso cancelar minha consulta de amanhã. Surgiu uma reunião 😞', 'in', 400);
+    await addBubble(`Oi, preciso cancelar meu agendamento de amanhã (${d.servico}). Surgiu um imprevisto 😞`, 'in', 400);
     await showTyping(900);
-    await addBubble(`Sem problemas! 👍 Posso ajudar a reagendar pra você não perder o acompanhamento. Tem horário em algum desses dias?<br><br>📅 Quinta 14/05 — 10h ou 16h<br>📅 Sexta 15/05 — 09h ou 14h`, 'out', 1500);
+    await addBubble(`Sem problemas! 👍 Posso ajudar a reagendar pra você não perder o atendimento. Tem horário em algum desses dias?<br><br>📅 Quinta 14/05 — 10h ou 16h<br>📅 Sexta 15/05 — 09h ou 14h`, 'out', 1500);
     removeTyping();
     await showTyping(1800);
     await addBubble('Sexta às 14h fica ótimo!', 'in', 1500);
@@ -1274,21 +1397,21 @@ document.querySelectorAll('.faq-item').forEach(item => {
 
   async function playNovo(){
     const d = getData();
-    await addBubble(`Oi, gostaria de marcar uma ${d.servico}. É a primeira vez que venho aí.`, 'in', 400);
+    await addBubble(`Oi, gostaria de agendar uma ${d.servico}. É a primeira vez que entro em contato.`, 'in', 400);
     await showTyping(900);
-    await addBubble(`Olá! 👋 Bem-vindo(a) à ${d.clinica}. Tenho esses horários para primeira consulta com ${d.prof}:<br><br>1️⃣ Quarta 13/05 — 14h<br>2️⃣ Quinta 14/05 — 10h<br>3️⃣ Sexta 15/05 — 16h<br><br>Qual prefere?`, 'out', 1500);
+    await addBubble(`Olá! 👋 Bem-vindo(a) à ${d.clinica}. Tenho esses horários disponíveis com ${d.prof}:<br><br>1️⃣ Quarta 13/05 — 14h<br>2️⃣ Quinta 14/05 — 10h<br>3️⃣ Sexta 15/05 — 16h<br><br>Qual prefere?`, 'out', 1500);
     removeTyping();
     await showTyping(1500);
     await addBubble('Pode ser opção 2!', 'in', 1300);
     removeTyping();
     await showTyping(800);
-    await addBubble(`Perfeito! Pra confirmar, me passa: nome completo e CPF?`, 'out', 1100);
+    await addBubble(`Perfeito! Pra confirmar, me passa: nome completo e telefone para contato?`, 'out', 1100);
     removeTyping();
     await showTyping(2200);
-    await addBubble('João Silva, 123.456.789-00', 'in', 1800);
+    await addBubble('João Silva, (13) 99999-0000', 'in', 1800);
     removeTyping();
     await showTyping(900);
-    await addBubble(`✅ Consulta agendada!<br><br>👤 João Silva<br>📅 Quinta 14/05 às 10h<br>👨‍⚕️ ${d.prof}<br>📍 Av. Ana Costa, 100 — ${d.cidade}<br>💰 ${d.valor} (PIX, débito ou crédito)<br><br>Você recebe lembrete 24h antes. Até lá! 😊`, 'out', 1400);
+    await addBubble(`✅ Agendamento confirmado!<br><br>👤 João Silva<br>📅 Quinta 14/05 às 10h<br>🧑‍💼 ${d.prof}<br>📍 ${d.cidade} (endereço completo enviado por aqui)<br>💰 ${d.valor}<br><br>Você recebe lembrete 24h antes. Até lá! 😊`, 'out', 1400);
     removeTyping();
   }
 
