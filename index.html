@@ -3,99 +3,318 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Aira Group · Automação de WhatsApp para empresas no Brasil. Marque, cancele e confirme atendimentos automaticamente.">
-<title>Aira Group · Automação de WhatsApp para o seu negócio</title>
+<meta name="description" content="Aira Group · Automação de WhatsApp sob medida para empresas. Diagnóstico gratuito e proposta personalizada para sua operação.">
+<meta name="theme-color" content="#0a0e16" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<title>Aira Group · Automação de WhatsApp sob medida</title>
 <link rel="icon" type="image/jpeg" href="Logo_Aira_Insta.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Aplica tema antes do paint para evitar flash -->
+<script>
+  (function(){
+    try {
+      var saved = localStorage.getItem('aira-theme');
+      var sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      var theme = saved || sys;
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch(e){}
+  })();
+</script>
+
 <style>
+  /* ===========================================
+     DESIGN TOKENS — Light (default) + Dark
+     =========================================== */
   :root {
-    --teal-blue: #007BFF;
-    --teal-blue-dark: #0061CC;
-    --innovation-green: #00E676;
-    --innovation-green-dark: #00B85F;
-    --slate: #1a1f2e;
-    --slate-mid: #2c3344;
-    --slate-light: #4a5269;
-    --gray-soft: #6b7280;
-    --gray-line: #e5e7eb;
+    /* Backgrounds */
     --bg: #ffffff;
     --bg-soft: #f7f9fc;
-    --bg-darkest: #0a0e16;
-    --gradient-brand: linear-gradient(135deg, #007BFF 0%, #00E676 100%);
-    --gradient-brand-soft: linear-gradient(135deg, rgba(0,123,255,0.08) 0%, rgba(0,230,118,0.08) 100%);
+    --bg-elevated: #ffffff;
+    --bg-overlay: rgba(255,255,255,0.85);
+    --bg-inverted: #0a0e16;
+
+    /* Text */
+    --text-primary: #0a0e16;
+    --text-secondary: #4a5269;
+    --text-tertiary: #6b7280;
+    --text-on-dark: #f0f3f8;
+    --text-on-brand: #ffffff;
+
+    /* Borders */
+    --border: #e5e7eb;
+    --border-strong: #d1d5db;
+    --border-subtle: rgba(0,0,0,0.06);
+
+    /* Brand */
+    --brand: #007BFF;
+    --brand-hover: #0061CC;
+    --brand-accent: #00C766;
+    --brand-accent-hover: #00A856;
+
+    /* Surfaces */
+    --surface-1: rgba(0,0,0,0.02);
+    --surface-2: rgba(0,0,0,0.04);
+    --surface-brand: rgba(0,123,255,0.06);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(15,23,42,0.04);
+    --shadow-md: 0 8px 24px -8px rgba(15,23,42,0.08);
+    --shadow-lg: 0 20px 40px -12px rgba(15,23,42,0.10);
+    --shadow-xl: 0 30px 80px -20px rgba(15,23,42,0.12);
+    --shadow-glow: 0 0 0 1px rgba(0,123,255,0.1), 0 8px 32px -8px rgba(0,123,255,0.25);
+
+    /* Gradients */
+    --gradient-brand: linear-gradient(135deg, #007BFF 0%, #00C766 100%);
+    --gradient-brand-soft: linear-gradient(135deg, rgba(0,123,255,0.08) 0%, rgba(0,199,102,0.08) 100%);
+    --gradient-mesh: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,123,255,0.10), transparent 60%);
+
+    /* WhatsApp colors (consistent across themes) */
+    --wa-header: #075E54;
+    --wa-bg: #0e1410;
+    --wa-bubble-in: #1f2c2a;
+    --wa-bubble-out: #054d3a;
   }
-  
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  html { scroll-behavior: smooth; }
-  
+
+  [data-theme="dark"] {
+    /* Backgrounds */
+    --bg: #0a0e16;
+    --bg-soft: #0f1420;
+    --bg-elevated: #131a28;
+    --bg-overlay: rgba(10,14,22,0.75);
+    --bg-inverted: #f7f9fc;
+
+    /* Text */
+    --text-primary: #f0f3f8;
+    --text-secondary: #a8b1c0;
+    --text-tertiary: #6b7585;
+    --text-on-dark: #f0f3f8;
+    --text-on-brand: #ffffff;
+
+    /* Borders */
+    --border: #1f2633;
+    --border-strong: #2a3343;
+    --border-subtle: rgba(255,255,255,0.06);
+
+    /* Brand — slightly brighter for dark mode contrast */
+    --brand: #3b9aff;
+    --brand-hover: #60aeff;
+    --brand-accent: #00d973;
+    --brand-accent-hover: #2eeb8e;
+
+    /* Surfaces */
+    --surface-1: rgba(255,255,255,0.03);
+    --surface-2: rgba(255,255,255,0.05);
+    --surface-brand: rgba(59,154,255,0.08);
+
+    /* Shadows — deeper for dark */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px -8px rgba(0,0,0,0.5);
+    --shadow-lg: 0 20px 40px -12px rgba(0,0,0,0.6);
+    --shadow-xl: 0 30px 80px -20px rgba(0,0,0,0.7);
+    --shadow-glow: 0 0 0 1px rgba(59,154,255,0.15), 0 8px 32px -8px rgba(59,154,255,0.3);
+
+    /* Gradients */
+    --gradient-brand: linear-gradient(135deg, #3b9aff 0%, #00d973 100%);
+    --gradient-brand-soft: linear-gradient(135deg, rgba(59,154,255,0.12) 0%, rgba(0,217,115,0.12) 100%);
+    --gradient-mesh: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,154,255,0.15), transparent 60%);
+  }
+
+  /* ===========================================
+     RESET & BASE
+     =========================================== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
   body {
-    font-family: 'Inter', sans-serif;
-    color: var(--slate);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-primary);
     background: var(--bg);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
-  
-  h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
-  
+
+  body, body * { transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease; }
+  /* Don't transition interactive movement */
+  a, button, .floating-card, .problem-card, .step-num, .demo-bubble { transition-property: background-color, border-color, color, box-shadow, transform; }
+
+  h1, h2, h3, h4 {
+    font-family: 'Sora', 'Inter', sans-serif;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+  }
+
+  ::selection { background: var(--brand); color: white; }
+
   .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
-  
-  /* ============ NAV ============ */
+
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  /* ===========================================
+     NAV
+     =========================================== */
   nav {
     position: fixed; top: 0; left: 0; right: 0;
     z-index: 100;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0,0,0,0.04);
-    transition: all 0.3s;
+    background: var(--bg-overlay);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
   }
-  nav .container { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
+  nav .container {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px;
+  }
   .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .logo-mark {
-    width: 38px; height: 38px;
+    width: 36px; height: 36px;
     border-radius: 50%;
     overflow: hidden;
-    background: white;
+    background: var(--bg-elevated);
     flex-shrink: 0;
-    display: block;
+    box-shadow: var(--shadow-sm);
   }
   .logo-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .logo-text { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 18px; color: var(--slate); letter-spacing: -0.01em; }
-  .nav-links { display: flex; gap: 32px; align-items: center; }
-  .nav-links a { color: var(--slate-light); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--teal-blue); }
-  .nav-actions { display: flex; gap: 12px; align-items: center; }
+  .logo-text {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--text-primary);
+    letter-spacing: -0.015em;
+  }
+  .nav-links {
+    display: flex; gap: 4px; align-items: center;
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 4px 6px;
+  }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 999px;
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-primary); background: var(--surface-2); }
+
+  .nav-actions { display: flex; gap: 8px; align-items: center; }
+
+  .theme-toggle {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .theme-toggle:hover { color: var(--text-primary); border-color: var(--border-strong); transform: translateY(-1px); }
+  .theme-toggle svg {
+    width: 16px; height: 16px;
+    position: absolute;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+  }
+  .theme-toggle .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  .theme-toggle .icon-moon { opacity: 1; transform: rotate(0) scale(1); }
+  [data-theme="dark"] .theme-toggle .icon-sun { opacity: 1; transform: rotate(0) scale(1); }
+  [data-theme="dark"] .theme-toggle .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+
   .nav-social {
     width: 38px; height: 38px;
     border-radius: 50%;
-    border: 1.5px solid var(--gray-line);
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
     display: inline-flex; align-items: center; justify-content: center;
-    color: var(--slate-light);
+    color: var(--text-secondary);
     text-decoration: none;
-    transition: all 0.2s;
   }
-  .nav-social:hover { border-color: var(--teal-blue); color: var(--teal-blue); transform: translateY(-1px); }
-  .nav-social svg { width: 18px; height: 18px; }
+  .nav-social:hover { color: var(--text-primary); border-color: var(--border-strong); transform: translateY(-1px); }
+  .nav-social svg { width: 16px; height: 16px; }
+
   .nav-cta {
-    background: var(--slate); color: white;
-    padding: 10px 20px; border-radius: 999px;
-    font-size: 14px; font-weight: 500;
+    background: var(--text-primary);
+    color: var(--bg);
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
     text-decoration: none;
-    transition: all 0.2s;
     display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--text-primary);
   }
-  .nav-cta:hover { background: var(--teal-blue); transform: translateY(-1px); }
-  
-  @media (max-width: 768px) {
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  @media (max-width: 968px) {
     .nav-links { display: none; }
-    .nav-links.mobile-show { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 24px; border-bottom: 1px solid var(--gray-line); }
   }
-  
-  /* ============ HERO ============ */
+
+  /* ===========================================
+     BUTTONS
+     =========================================== */
+  .btn-primary {
+    background: var(--text-primary);
+    color: var(--bg);
+    padding: 14px 26px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--text-primary);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  .btn-primary.brand {
+    background: var(--gradient-brand);
+    border-color: transparent;
+    color: white;
+  }
+  .btn-primary.brand:hover {
+    box-shadow: 0 16px 40px -12px rgba(0,123,255,0.4);
+  }
+
+  .btn-secondary {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    padding: 14px 26px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ===========================================
+     HERO
+     =========================================== */
   .hero {
     padding: 140px 0 100px;
     background: var(--bg);
@@ -105,39 +324,47 @@
   .hero::before {
     content: '';
     position: absolute;
-    top: -200px; right: -200px;
-    width: 600px; height: 600px;
-    background: var(--gradient-brand);
-    opacity: 0.06;
-    border-radius: 50%;
-    filter: blur(80px);
+    inset: 0;
+    background: var(--gradient-mesh);
     pointer-events: none;
   }
   .hero::after {
     content: '';
     position: absolute;
-    bottom: -300px; left: -300px;
-    width: 700px; height: 700px;
+    bottom: -300px; left: -200px;
+    width: 600px; height: 600px;
     background: var(--gradient-brand);
-    opacity: 0.04;
+    opacity: 0.05;
     border-radius: 50%;
-    filter: blur(100px);
+    filter: blur(120px);
     pointer-events: none;
   }
-  .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+  [data-theme="dark"] .hero::after { opacity: 0.12; }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
   .badge-pill {
     display: inline-flex; align-items: center; gap: 8px;
-    background: var(--gradient-brand-soft);
-    color: var(--teal-blue-dark);
-    padding: 8px 16px;
+    background: var(--surface-brand);
+    color: var(--brand);
+    padding: 7px 14px;
     border-radius: 999px;
-    font-size: 13px; font-weight: 500;
-    margin-bottom: 24px;
+    font-size: 12.5px;
+    font-weight: 500;
+    margin-bottom: 28px;
     border: 1px solid rgba(0,123,255,0.15);
   }
+  [data-theme="dark"] .badge-pill { border-color: rgba(59,154,255,0.2); }
   .badge-pulse {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--innovation-green);
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--brand-accent);
     box-shadow: 0 0 0 0 rgba(0,230,118,0.6);
     animation: pulse 2s infinite;
   }
@@ -145,10 +372,12 @@
     0%, 100% { box-shadow: 0 0 0 0 rgba(0,230,118,0.5); }
     50% { box-shadow: 0 0 0 8px rgba(0,230,118,0); }
   }
+
   .hero h1 {
-    font-size: clamp(36px, 5.2vw, 60px);
+    font-size: clamp(36px, 5.4vw, 62px);
     margin-bottom: 24px;
-    color: var(--slate);
+    color: var(--text-primary);
+    font-weight: 700;
   }
   .hero h1 .highlight {
     background: var(--gradient-brand);
@@ -156,78 +385,54 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
   .hero-subtitle {
     font-size: 19px;
-    color: var(--slate-light);
+    color: var(--text-secondary);
     margin-bottom: 36px;
     max-width: 540px;
     line-height: 1.6;
   }
-  .hero-cta {
-    display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px;
-  }
-  .btn-primary {
-    background: var(--slate);
-    color: white;
-    padding: 16px 28px;
-    border-radius: 12px;
-    font-size: 15px; font-weight: 600;
-    text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: all 0.2s;
-    border: none; cursor: pointer;
-    font-family: 'Inter', sans-serif;
-  }
-  .btn-primary:hover { background: var(--teal-blue); transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(0,123,255,0.3); }
-  .btn-secondary {
-    background: white;
-    color: var(--slate);
-    padding: 16px 28px;
-    border-radius: 12px;
-    font-size: 15px; font-weight: 600;
-    text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: all 0.2s;
-    border: 1.5px solid var(--gray-line);
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-  }
-  .btn-secondary:hover { border-color: var(--slate); transform: translateY(-2px); }
+
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+
   .hero-trust {
-    display: flex; gap: 32px; flex-wrap: wrap;
+    display: flex; gap: 28px; flex-wrap: wrap;
     padding-top: 28px;
-    border-top: 1px solid var(--gray-line);
+    border-top: 1px solid var(--border-subtle);
   }
   .trust-item {
     display: flex; align-items: center; gap: 10px;
-    color: var(--slate-light);
-    font-size: 14px;
+    color: var(--text-secondary);
+    font-size: 13.5px;
   }
   .trust-icon {
-    width: 32px; height: 32px;
-    background: var(--gradient-brand-soft);
+    width: 30px; height: 30px;
+    background: var(--surface-brand);
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    color: var(--teal-blue); font-size: 16px;
+    color: var(--brand);
+    font-size: 14px;
   }
-  
-  /* Hero phone mockup */
+
+  /* Hero visual */
   .hero-visual { position: relative; height: 580px; }
   .phone-frame {
     position: absolute;
     width: 320px;
     height: 580px;
-    background: var(--slate);
+    background: #0a0e16;
     border-radius: 42px;
     padding: 12px;
-    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.25), 0 12px 30px -10px rgba(0,123,255,0.15);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.35), 0 12px 30px -10px rgba(0,123,255,0.2);
     right: 20px; top: 0;
     z-index: 2;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
   }
+  [data-theme="dark"] .phone-frame { box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05); }
   .phone-screen {
     width: 100%; height: 100%;
-    background: #0a1410;
+    background: var(--wa-bg);
     border-radius: 32px;
     overflow: hidden;
     position: relative;
@@ -236,12 +441,12 @@
     position: absolute;
     top: 0; left: 50%; transform: translateX(-50%);
     width: 100px; height: 24px;
-    background: var(--slate);
+    background: #0a0e16;
     border-radius: 0 0 16px 16px;
     z-index: 3;
   }
   .wa-header {
-    background: #0F6E56;
+    background: var(--wa-header);
     padding: 32px 16px 12px;
     color: white;
     display: flex; align-items: center; gap: 10px;
@@ -251,19 +456,16 @@
     border-radius: 50%;
     background: white;
     overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 14px; color: white;
     flex-shrink: 0;
   }
   .wa-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .wa-name { font-size: 14px; font-weight: 600; }
-  .wa-status { font-size: 11px; opacity: 0.85; }
+  .wa-name { font-size: 14px; font-weight: 600; color: white; }
+  .wa-status { font-size: 11px; opacity: 0.85; color: white; }
   .wa-chat {
     padding: 16px 12px;
     height: calc(100% - 76px);
-    background: #0e1410;
+    background: var(--wa-bg);
     display: flex; flex-direction: column; gap: 8px;
-    overflow-y: auto;
   }
   .wa-bubble {
     max-width: 78%;
@@ -274,103 +476,109 @@
     color: #f0f0f0;
     animation: slideIn 0.4s ease-out backwards;
   }
-  .wa-bubble.in { align-self: flex-start; background: #1f2c2a; border-top-left-radius: 2px; }
-  .wa-bubble.out { align-self: flex-end; background: #054d3a; border-top-right-radius: 2px; }
+  .wa-bubble.in { align-self: flex-start; background: var(--wa-bubble-in); border-top-left-radius: 2px; }
+  .wa-bubble.out { align-self: flex-end; background: var(--wa-bubble-out); border-top-right-radius: 2px; }
   .wa-bubble .time { display: block; font-size: 9px; color: rgba(255,255,255,0.5); text-align: right; margin-top: 2px; }
   @keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  
+
   .floating-card {
     position: absolute;
-    background: white;
-    padding: 14px 18px;
+    background: var(--bg-elevated);
+    padding: 12px 16px;
     border-radius: 12px;
-    box-shadow: 0 16px 40px -12px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-lg);
     display: flex; align-items: center; gap: 10px;
     z-index: 3;
-    border: 1px solid var(--gray-line);
+    border: 1px solid var(--border);
   }
   .fc-icon {
-    width: 32px; height: 32px; border-radius: 8px;
+    width: 30px; height: 30px; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     color: white; font-weight: 700; font-size: 14px;
   }
-  .fc-text { font-size: 12px; }
-  .fc-text strong { display: block; font-size: 13px; color: var(--slate); }
-  .fc-text span { color: var(--gray-soft); font-size: 11px; }
-  
+  .fc-text { font-size: 11.5px; }
+  .fc-text strong { display: block; font-size: 12.5px; color: var(--text-primary); font-weight: 600; }
+  .fc-text span { color: var(--text-tertiary); font-size: 11px; }
+
   .floating-card.f1 { top: 60px; left: -10px; animation: float 4s ease-in-out infinite; }
   .floating-card.f2 { top: 280px; left: -20px; animation: float 4s ease-in-out infinite 1s; }
   .floating-card.f3 { bottom: 80px; right: 280px; animation: float 4s ease-in-out infinite 2s; }
   .floating-card.f1 .fc-icon { background: var(--gradient-brand); }
-  .floating-card.f2 .fc-icon { background: var(--innovation-green); }
-  .floating-card.f3 .fc-icon { background: var(--teal-blue); }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  
+  .floating-card.f2 .fc-icon { background: var(--brand-accent); }
+  .floating-card.f3 .fc-icon { background: var(--brand); }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
   @media (max-width: 968px) {
     .hero { padding: 110px 0 60px; }
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero-visual { height: 520px; transform: scale(0.85); }
     .floating-card.f3 { right: 0; }
   }
-  
-  /* ============ SECTIONS COMMON ============ */
+
+  /* ===========================================
+     SECTIONS COMMON
+     =========================================== */
   section { padding: 100px 0; position: relative; }
-  .section-header { text-align: center; max-width: 700px; margin: 0 auto 64px; }
+  .section-header { text-align: center; max-width: 720px; margin: 0 auto 64px; }
   .section-tag {
     display: inline-block;
-    color: var(--teal-blue);
-    font-size: 13px;
+    color: var(--brand);
+    font-size: 12.5px;
     font-weight: 600;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-bottom: 16px;
   }
   .section-header h2 {
-    font-size: clamp(30px, 4vw, 44px);
+    font-size: clamp(30px, 4vw, 46px);
     margin-bottom: 16px;
-    color: var(--slate);
+    color: var(--text-primary);
   }
   .section-header p {
     font-size: 18px;
-    color: var(--slate-light);
+    color: var(--text-secondary);
     line-height: 1.6;
   }
-  
-  /* ============ PROBLEMS ============ */
+
+  /* ===========================================
+     PROBLEMS
+     =========================================== */
   .problems { background: var(--bg-soft); }
   .problems-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 20px;
   }
   .problem-card {
-    background: white;
-    padding: 36px 28px;
+    background: var(--bg-elevated);
+    padding: 32px 28px;
     border-radius: 20px;
-    border: 1px solid var(--gray-line);
-    transition: all 0.3s;
+    border: 1px solid var(--border);
     position: relative;
   }
-  .problem-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -12px rgba(0,0,0,0.08); border-color: var(--teal-blue); }
+  .problem-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--brand);
+  }
   .problem-icon {
-    width: 56px; height: 56px;
-    background: var(--gradient-brand-soft);
+    width: 52px; height: 52px;
+    background: var(--surface-brand);
     border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 24px;
-    font-size: 28px;
+    margin-bottom: 22px;
+    font-size: 26px;
   }
-  .problem-card h3 { font-size: 19px; margin-bottom: 12px; color: var(--slate); }
-  .problem-card p { color: var(--slate-light); font-size: 15px; line-height: 1.6; }
-  
+  .problem-card h3 { font-size: 19px; margin-bottom: 12px; color: var(--text-primary); }
+  .problem-card p { color: var(--text-secondary); font-size: 14.5px; line-height: 1.6; }
+
   @media (max-width: 768px) {
     .problems-grid { grid-template-columns: 1fr; }
   }
-  
-  /* ============ HOW IT WORKS ============ */
+
+  /* ===========================================
+     HOW IT WORKS
+     =========================================== */
   .how { background: var(--bg); }
   .steps {
     display: grid;
@@ -378,11 +586,7 @@
     gap: 8px;
     position: relative;
   }
-  .step {
-    text-align: center;
-    padding: 32px 16px;
-    position: relative;
-  }
+  .step { text-align: center; padding: 32px 16px; position: relative; }
   .step-num {
     width: 56px; height: 56px;
     background: var(--gradient-brand);
@@ -395,31 +599,41 @@
     margin: 0 auto 20px;
     box-shadow: 0 8px 24px -8px rgba(0,123,255,0.4);
   }
-  .step h3 { font-size: 17px; margin-bottom: 8px; color: var(--slate); }
-  .step p { color: var(--slate-light); font-size: 14px; line-height: 1.5; }
+  .step h3 { font-size: 17px; margin-bottom: 8px; color: var(--text-primary); }
+  .step p { color: var(--text-secondary); font-size: 14px; line-height: 1.55; }
   .step:not(:last-child)::after {
     content: '→';
     position: absolute;
     right: -8px; top: 50px;
-    color: var(--gray-line);
+    color: var(--border-strong);
     font-size: 22px;
   }
-  
+
   @media (max-width: 768px) {
     .steps { grid-template-columns: 1fr; gap: 24px; }
     .step:not(:last-child)::after { display: none; }
   }
-  
-  /* ============ DEMO ============ */
-  .demo-section { background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%); }
+
+  /* ===========================================
+     DEMO
+     =========================================== */
+  .demo-section { background: var(--bg-soft); }
   .demo-card {
-    background: white;
+    background: var(--bg-elevated);
     border-radius: 24px;
-    border: 1px solid var(--gray-line);
-    padding: 40px;
-    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.08);
+    border: 1px solid var(--border);
+    padding: 36px;
+    box-shadow: var(--shadow-lg);
   }
-  .demo-controls { margin-bottom: 32px; }
+  .demo-controls { margin-bottom: 28px; }
+  .demo-step-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
   .demo-tabs {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -427,63 +641,78 @@
     margin-bottom: 20px;
   }
   .demo-tab {
-    background: white;
-    border: 1.5px solid var(--gray-line);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 12px 8px;
-    font-size: 13px; font-weight: 500;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
     text-align: center;
-    color: var(--slate-light);
-    font-family: 'Inter', sans-serif;
+    color: var(--text-secondary);
+    font-family: inherit;
   }
-  .demo-tab i { display: block; margin: 0 auto 4px; font-size: 18px; }
-  .demo-tab:hover { border-color: var(--teal-blue); color: var(--teal-blue); }
-  .demo-tab.active { background: var(--gradient-brand); color: white; border-color: transparent; }
+  .demo-tab i { display: block; margin: 0 auto 4px; font-size: 18px; font-style: normal; }
+  .demo-tab:hover { border-color: var(--brand); color: var(--brand); }
+  .demo-tab.active { background: var(--gradient-brand); color: white; border-color: transparent; box-shadow: 0 4px 12px -4px rgba(0,123,255,0.4); }
+
   .demo-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
   }
   .demo-form input {
     padding: 12px 14px;
-    border: 1.5px solid var(--gray-line);
+    border: 1px solid var(--border);
     border-radius: 10px;
     font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.2s;
-    color: var(--slate);
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--bg);
   }
   .demo-form input.full-width { grid-column: span 2; }
-  .demo-form input:focus { outline: none; border-color: var(--teal-blue); box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
-  .demo-form input::placeholder { color: var(--gray-soft); }
-  .demo-form input.highlight-custom { border-color: var(--innovation-green); background: rgba(0,230,118,0.04); }
+  .demo-form input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(0,123,255,0.12); }
+  .demo-form input::placeholder { color: var(--text-tertiary); }
+  .demo-form input.highlight-custom { border-color: var(--brand-accent); background: rgba(0,199,102,0.04); }
+  [data-theme="dark"] .demo-form input.highlight-custom { background: rgba(0,217,115,0.06); }
+
+  .demo-hint {
+    font-size: 12px;
+    color: var(--brand-accent);
+    margin: 0 0 16px;
+    display: none;
+    font-weight: 500;
+  }
+  .demo-hint.show { display: block; }
+
   .demo-stage {
-    background: var(--slate);
-    color: white;
-    padding: 14px 20px;
+    background: var(--text-primary);
+    color: var(--bg);
+    padding: 14px 18px;
     border-radius: 12px;
     display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
   .demo-stage-name { font-size: 14px; font-weight: 500; }
   .demo-stage-tag {
     background: var(--gradient-brand);
-    padding: 4px 12px;
+    color: white;
+    padding: 4px 10px;
     border-radius: 6px;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
   }
   .demo-phone {
     background: #0a0e0a;
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid var(--gray-line);
+    border: 1px solid var(--border);
     margin-bottom: 20px;
   }
   .demo-phone-header {
-    background: #0F6E56;
+    background: var(--wa-header);
     color: white;
     padding: 14px 16px;
     display: flex; align-items: center; gap: 12px;
@@ -492,12 +721,12 @@
     width: 40px; height: 40px; border-radius: 50%;
     background: rgba(255,255,255,0.18);
     display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 14px;
+    font-weight: 700; font-size: 14px; color: white;
   }
-  .demo-phone-name { font-size: 15px; font-weight: 600; line-height: 1.2; }
-  .demo-phone-status { font-size: 12px; opacity: 0.85; }
+  .demo-phone-name { font-size: 14.5px; font-weight: 600; line-height: 1.2; color: white; }
+  .demo-phone-status { font-size: 12px; opacity: 0.85; color: white; }
   .demo-chat {
-    background: #0e1410;
+    background: var(--wa-bg);
     padding: 16px;
     height: 380px;
     overflow-y: auto;
@@ -522,8 +751,8 @@
     animation: bubbleIn 0.4s ease-out backwards;
     word-wrap: break-word;
   }
-  .demo-bubble.in { align-self: flex-start; background: #1f2c2a; border-top-left-radius: 2px; }
-  .demo-bubble.out { align-self: flex-end; background: #054d3a; border-top-right-radius: 2px; }
+  .demo-bubble.in { align-self: flex-start; background: var(--wa-bubble-in); border-top-left-radius: 2px; }
+  .demo-bubble.out { align-self: flex-end; background: var(--wa-bubble-out); border-top-right-radius: 2px; }
   .demo-bubble .time { display: block; font-size: 10px; color: rgba(255,255,255,0.55); text-align: right; margin-top: 2px; }
   .demo-bubble.typing { display: flex; gap: 5px; padding: 14px; }
   .demo-bubble.typing span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.6); animation: typing 1.4s infinite; }
@@ -531,7 +760,7 @@
   .demo-bubble.typing span:nth-child(3) { animation-delay: 0.4s; }
   @keyframes typing { 0%, 60%, 100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-4px); } }
   @keyframes bubbleIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-  
+
   .demo-input-area {
     background: #0a1410;
     padding: 12px;
@@ -549,132 +778,312 @@
   .demo-send {
     width: 36px; height: 36px;
     border-radius: 50%;
-    background: #0F6E56;
+    background: var(--wa-header);
     color: white;
     display: flex; align-items: center; justify-content: center;
     font-size: 14px;
   }
-  
+
   .demo-scenarios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
   .demo-scenario {
-    background: white;
-    border: 1.5px solid var(--gray-line);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
     border-radius: 10px;
     padding: 12px;
     font-size: 13px; font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
-    color: var(--slate-light);
-    font-family: 'Inter', sans-serif;
+    color: var(--text-secondary);
+    font-family: inherit;
   }
-  .demo-scenario:hover { border-color: var(--teal-blue); color: var(--teal-blue); }
-  .demo-scenario.active { background: rgba(0,123,255,0.08); border-color: var(--teal-blue); color: var(--teal-blue-dark); }
-  
+  .demo-scenario:hover { border-color: var(--brand); color: var(--brand); }
+  .demo-scenario.active { background: var(--surface-brand); border-color: var(--brand); color: var(--brand); }
+
   .demo-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .demo-btn-reset {
-    background: white;
-    border: 1.5px solid var(--gray-line);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 14px;
+    padding: 13px;
     font-size: 14px; font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
-    color: var(--slate);
-    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    font-family: inherit;
   }
-  .demo-btn-reset:hover { border-color: var(--slate); }
+  .demo-btn-reset:hover { border-color: var(--border-strong); }
   .demo-btn-play {
-    background: var(--slate);
-    color: white;
+    background: var(--text-primary);
+    color: var(--bg);
     border: none;
     border-radius: 12px;
-    padding: 14px;
+    padding: 13px;
     font-size: 14px; font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
+    font-family: inherit;
   }
-  .demo-btn-play:hover { background: var(--teal-blue); }
-  .demo-btn-play:disabled { opacity: 0.6; cursor: wait; }
-  
-  .demo-hint {
-    font-size: 12px;
-    color: var(--innovation-green-dark);
-    margin: -10px 0 16px;
-    display: none;
-    font-weight: 500;
-  }
-  .demo-hint.show { display: block; }
-  
+  .demo-btn-play:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .demo-btn-play:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
   @media (max-width: 768px) {
-    .demo-card { padding: 24px; }
+    .demo-card { padding: 22px; }
     .demo-tabs { grid-template-columns: repeat(2, 1fr); }
     .demo-form { grid-template-columns: 1fr; }
     .demo-form input.full-width { grid-column: span 1; }
     .demo-scenarios { grid-template-columns: 1fr; }
   }
-  
-  /* ============ PRICING ============ */
-  .pricing { background: var(--slate); color: white; }
-  .pricing .section-header h2 { color: white; }
-  .pricing .section-header p { color: rgba(255,255,255,0.7); }
-  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .price-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px;
-    padding: 36px 28px;
-    transition: all 0.3s;
+
+  /* ===========================================
+     SOLUÇÃO PERSONALIZADA (no lugar do pricing)
+     =========================================== */
+  .solution {
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .solution::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: var(--gradient-brand);
+    opacity: 0.05;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+  }
+  [data-theme="dark"] .solution::before { opacity: 0.12; }
+
+  .solution .container { position: relative; z-index: 1; }
+
+  /* Diagnostic card — central piece */
+  .solution-diagnostic {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .solution-diagnostic::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 300px; height: 300px;
+    background: var(--gradient-brand-soft);
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .solution-diag-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
     position: relative;
   }
-  .price-card:hover { transform: translateY(-4px); border-color: rgba(0,230,118,0.3); }
-  .price-card.featured {
-    background: rgba(0,123,255,0.08);
-    border: 2px solid var(--teal-blue);
+  .solution-diag-icon {
+    width: 48px; height: 48px;
+    background: var(--gradient-brand);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 22px;
+    box-shadow: 0 8px 24px -8px rgba(0,123,255,0.4);
   }
-  .price-badge {
-    position: absolute; top: -12px; left: 28px;
+  .solution-diag-header h3 {
+    font-size: 24px;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .solution-diag-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .solution-variables {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .solution-var {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 16px 18px;
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+  }
+  .solution-var:hover {
+    border-color: var(--brand);
+    background: var(--surface-brand);
+    transform: translateY(-2px);
+  }
+  .solution-var-icon {
+    width: 32px; height: 32px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .solution-var-text strong {
+    display: block;
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 2px;
+    font-family: 'Sora', sans-serif;
+  }
+  .solution-var-text span {
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+  }
+
+  .solution-cta-box {
+    background: var(--text-primary);
+    color: var(--bg);
+    border-radius: 20px;
+    padding: 36px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .solution-cta-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 50%, rgba(0,123,255,0.15), transparent 60%);
+    pointer-events: none;
+  }
+  .solution-cta-content { position: relative; z-index: 1; }
+  .solution-cta-content h3 {
+    font-size: 22px;
+    color: var(--bg);
+    margin-bottom: 8px;
+  }
+  .solution-cta-content p {
+    font-size: 14.5px;
+    color: var(--bg);
+    opacity: 0.75;
+    max-width: 480px;
+  }
+  .solution-cta-btn {
     background: var(--gradient-brand);
     color: white;
-    padding: 5px 14px;
-    border-radius: 8px;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.06em;
-  }
-  .price-name { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.7); margin-bottom: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
-  .price-amount { font-family: 'Sora', sans-serif; font-size: 48px; font-weight: 800; color: white; line-height: 1; margin-bottom: 4px; }
-  .price-amount .currency { font-size: 22px; vertical-align: super; opacity: 0.7; margin-right: 4px; }
-  .price-amount .period { font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.5); }
-  .price-setup { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
-  .price-target { font-size: 14px; color: rgba(255,255,255,0.85); margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
-  .price-features { list-style: none; margin-bottom: 32px; }
-  .price-features li { display: flex; gap: 10px; padding: 8px 0; font-size: 14px; color: rgba(255,255,255,0.85); }
-  .price-features li::before { content: '✓'; color: var(--innovation-green); font-weight: 700; flex-shrink: 0; }
-  .price-cta {
-    display: block; text-align: center;
-    background: rgba(255,255,255,0.1);
-    color: white;
-    padding: 14px;
+    padding: 16px 28px;
     border-radius: 12px;
-    text-decoration: none;
+    font-size: 15px;
     font-weight: 600;
-    font-size: 14px;
-    transition: all 0.2s;
-    border: 1px solid rgba(255,255,255,0.15);
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 8px 24px -8px rgba(0,123,255,0.5);
   }
-  .price-cta:hover { background: white; color: var(--slate); }
-  .price-card.featured .price-cta { background: var(--gradient-brand); border: none; }
-  .price-card.featured .price-cta:hover { transform: scale(1.02); box-shadow: 0 12px 32px -8px rgba(0,230,118,0.4); }
-  
+  .solution-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px -8px rgba(0,123,255,0.6);
+  }
+
+  /* Process flow */
+  .solution-process {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .process-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    position: relative;
+  }
+  .process-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .process-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .process-card h4 {
+    font-size: 17px;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .process-card p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .process-time {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    padding: 4px 10px;
+    background: var(--surface-1);
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+  }
+  .process-time::before { content: '⏱'; font-size: 11px; }
+
+  /* Guarantees row */
+  .solution-guarantees {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .guarantee {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 18px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .guarantee-icon {
+    width: 28px; height: 28px;
+    background: var(--surface-brand);
+    color: var(--brand);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .guarantee-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
   @media (max-width: 968px) {
-    .pricing-grid { grid-template-columns: 1fr; }
+    .solution-diagnostic { padding: 32px 24px; }
+    .solution-variables { grid-template-columns: 1fr 1fr; }
+    .solution-cta-box { flex-direction: column; align-items: stretch; text-align: center; padding: 28px 24px; }
+    .solution-cta-btn { justify-content: center; }
+    .solution-process { grid-template-columns: 1fr; }
+    .solution-guarantees { grid-template-columns: 1fr 1fr; }
   }
-  
-  /* ============ FAQ ============ */
-  .faq { background: var(--bg); }
+  @media (max-width: 560px) {
+    .solution-variables { grid-template-columns: 1fr; }
+  }
+
+  /* ===========================================
+     FAQ
+     =========================================== */
+  .faq { background: var(--bg-soft); }
   .faq-list { max-width: 800px; margin: 0 auto; }
   .faq-item {
-    border-bottom: 1px solid var(--gray-line);
+    border-bottom: 1px solid var(--border);
     padding: 20px 0;
     cursor: pointer;
   }
@@ -682,16 +1091,15 @@
     display: flex; justify-content: space-between; align-items: center;
     font-family: 'Sora', sans-serif;
     font-size: 17px; font-weight: 600;
-    color: var(--slate);
-    transition: color 0.2s;
+    color: var(--text-primary);
   }
-  .faq-item:hover .faq-q { color: var(--teal-blue); }
+  .faq-item:hover .faq-q { color: var(--brand); }
   .faq-q-icon {
     width: 28px; height: 28px;
     border-radius: 50%;
-    background: var(--gradient-brand-soft);
+    background: var(--surface-brand);
     display: flex; align-items: center; justify-content: center;
-    color: var(--teal-blue);
+    color: var(--brand);
     font-size: 18px;
     transition: transform 0.3s;
     flex-shrink: 0;
@@ -702,13 +1110,15 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease, padding 0.3s ease;
-    color: var(--slate-light);
+    color: var(--text-secondary);
     font-size: 15px;
     line-height: 1.7;
   }
-  .faq-item.open .faq-a { max-height: 300px; padding-top: 16px; }
-  
-  /* ============ CTA FINAL ============ */
+  .faq-item.open .faq-a { max-height: 320px; padding-top: 16px; }
+
+  /* ===========================================
+     CTA FINAL
+     =========================================== */
   .cta-final {
     background: var(--gradient-brand);
     text-align: center;
@@ -725,17 +1135,18 @@
   .cta-final h2 {
     font-size: clamp(32px, 4.5vw, 48px);
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     position: relative;
     z-index: 1;
   }
   .cta-final p {
-    font-size: 19px;
+    font-size: 18px;
     color: rgba(255,255,255,0.9);
     margin-bottom: 36px;
     max-width: 600px;
     margin-left: auto; margin-right: auto;
     position: relative; z-index: 1;
+    line-height: 1.6;
   }
   .cta-final-buttons {
     display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
@@ -744,24 +1155,31 @@
   .cta-final-btn {
     display: inline-flex; align-items: center; gap: 8px;
     background: white;
-    color: var(--slate);
-    padding: 18px 36px;
+    color: var(--text-primary);
+    padding: 16px 32px;
     border-radius: 12px;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 16px;
-    transition: all 0.2s;
+    font-weight: 600;
+    font-size: 15px;
   }
+  [data-theme="dark"] .cta-final-btn { color: #0a0e16; }
   .cta-final-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -8px rgba(0,0,0,0.2); }
   .cta-final-btn.outline {
     background: transparent;
     color: white;
-    border: 2px solid rgba(255,255,255,0.5);
+    border: 1.5px solid rgba(255,255,255,0.4);
   }
   .cta-final-btn.outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
-  
-  /* ============ FOOTER ============ */
-  footer { background: var(--bg-darkest); color: rgba(255,255,255,0.6); padding: 60px 0 30px; }
+
+  /* ===========================================
+     FOOTER
+     =========================================== */
+  footer {
+    background: var(--bg-inverted);
+    color: rgba(240,243,248,0.6);
+    padding: 60px 0 30px;
+  }
+  [data-theme="dark"] footer { background: #050810; }
   .footer-grid {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
@@ -769,8 +1187,8 @@
     margin-bottom: 40px;
   }
   footer .logo-text { color: white; }
-  footer .logo-mark { width: 36px; height: 36px; }
-  .footer-tag { margin-top: 16px; font-size: 14px; line-height: 1.6; max-width: 280px; }
+  footer .logo-mark { width: 36px; height: 36px; box-shadow: none; }
+  .footer-tag { margin-top: 16px; font-size: 14px; line-height: 1.6; max-width: 280px; color: rgba(240,243,248,0.6); }
   .footer-social { display: flex; gap: 10px; margin-top: 20px; }
   .footer-social a {
     width: 36px; height: 36px;
@@ -778,81 +1196,95 @@
     background: rgba(255,255,255,0.08);
     display: inline-flex; align-items: center; justify-content: center;
     color: rgba(255,255,255,0.7);
-    transition: all 0.2s;
   }
   .footer-social a:hover { background: var(--gradient-brand); color: white; transform: translateY(-2px); }
   .footer-social svg { width: 16px; height: 16px; }
   .footer-col h4 { color: white; font-size: 14px; margin-bottom: 16px; font-family: 'Sora', sans-serif; }
-  .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; padding: 6px 0; font-size: 14px; transition: color 0.2s; }
-  .footer-col a:hover { color: var(--innovation-green); }
+  .footer-col a { display: block; color: rgba(240,243,248,0.6); text-decoration: none; padding: 6px 0; font-size: 14px; }
+  .footer-col a:hover { color: var(--brand-accent); }
   .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.08);
     padding-top: 24px;
     display: flex; justify-content: space-between;
     font-size: 13px;
-    color: rgba(255,255,255,0.4);
+    color: rgba(240,243,248,0.4);
     flex-wrap: wrap; gap: 12px;
   }
-  
-  @media (max-width: 768px) {
-    .footer-grid { grid-template-columns: 1fr; }
+
+  @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } }
+
+  /* ===========================================
+     REVEAL ANIMATION ON SCROLL
+     =========================================== */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in-view { opacity: 1; transform: none; transition: none; }
+    * { animation: none !important; }
   }
-  
-  /* sr-only for accessibility */
-  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 </style>
 </head>
 <body>
-<h2 class="sr-only">Aira Group: site institucional com demonstração interativa do produto de automação de WhatsApp para empresas.</h2>
+<h1 class="sr-only">Aira Group · Automação de WhatsApp sob medida para empresas</h1>
 
-<!-- NAV -->
+<!-- ============= NAV ============= -->
 <nav>
   <div class="container">
     <a href="#" class="logo">
       <span class="logo-mark"><img src="Logo_Aira_Insta.jpeg" alt="Aira Group"></span>
-      <div class="logo-text">Aira Group</div>
+      <span class="logo-text">Aira Group</span>
     </a>
     <div class="nav-links">
       <a href="#problemas">O problema</a>
       <a href="#como-funciona">Como funciona</a>
-      <a href="#demo">Demo ao vivo</a>
-      <a href="#planos">Planos</a>
+      <a href="#demo">Demo</a>
+      <a href="#solucao">Solução</a>
       <a href="#faq">Dúvidas</a>
     </div>
     <div class="nav-actions">
-      <a href="https://www.instagram.com/aira.solutions/" class="nav-social" target="_blank" rel="noopener" aria-label="Instagram da Aira Group">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      </button>
+      <a href="https://www.instagram.com/aira.solutions/" class="nav-social" target="_blank" rel="noopener" aria-label="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
           <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
         </svg>
       </a>
-      <a href="https://wa.me/5513981523082" class="nav-cta" target="_blank" rel="noopener">
-        Falar conosco →
+      <a href="https://wa.me/5513981523082?text=Quero%20um%20diagn%C3%B3stico%20da%20minha%20opera%C3%A7%C3%A3o" class="nav-cta" target="_blank" rel="noopener">
+        Falar com especialista →
       </a>
     </div>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ============= HERO ============= -->
 <section class="hero">
   <div class="container">
     <div class="hero-grid">
-      <div>
+      <div class="reveal">
         <div class="badge-pill">
           <span class="badge-pulse"></span>
-          Atendendo empresas e profissionais no Brasil
+          Automação sob medida · Atendendo empresas no Brasil
         </div>
         <h1>O WhatsApp do seu negócio <span class="highlight">funcionando sozinho.</span></h1>
         <p class="hero-subtitle">
-          Automação que marca, cancela, reagenda e responde dúvidas dos seus clientes sem você parar o que está fazendo. Integração nativa com Google Agenda. Setup em 48 horas.
+          Automação personalizada que marca, cancela, reagenda e responde dúvidas dos seus clientes — desenhada para o fluxo da sua operação. Integração com Google Agenda e suporte humano.
         </p>
         <div class="hero-cta">
-          <a href="#demo" class="btn-primary">
-            Ver demonstração ao vivo →
+          <a href="#solucao" class="btn-primary brand">
+            Solicitar diagnóstico gratuito →
           </a>
-          <a href="#planos" class="btn-secondary">
-            Ver planos
+          <a href="#demo" class="btn-secondary">
+            Ver demo ao vivo
           </a>
         </div>
         <div class="hero-trust">
@@ -870,7 +1302,8 @@
           </div>
         </div>
       </div>
-      <div class="hero-visual">
+
+      <div class="hero-visual reveal">
         <div class="phone-frame">
           <div class="phone-screen">
             <div class="phone-notch"></div>
@@ -885,7 +1318,7 @@
               <div class="wa-bubble in" style="animation-delay: 0.3s;">Oi, quero agendar um horário 🙂<span class="time">14:23</span></div>
               <div class="wa-bubble out" style="animation-delay: 0.8s;">Olá! 👋 Tenho esses horários:<br>1️⃣ Quinta 08/05 — 14h<br>2️⃣ Sexta 09/05 — 10h<br>3️⃣ Segunda 12/05 — 16h<span class="time">14:23</span></div>
               <div class="wa-bubble in" style="animation-delay: 1.4s;">Pode ser opção 2!<span class="time">14:24</span></div>
-              <div class="wa-bubble out" style="animation-delay: 2.0s;">✅ Confirmado!<br>📅 Sexta 09/05 às 10h<br>📍 Endereço enviado por aqui<br>💰 R$ 250<br><br>Te mando lembrete 24h antes 😊<span class="time">14:24</span></div>
+              <div class="wa-bubble out" style="animation-delay: 2.0s;">✅ Confirmado!<br>📅 Sexta 09/05 às 10h<br>📍 Endereço enviado por aqui<br><br>Te mando lembrete 24h antes 😊<span class="time">14:24</span></div>
             </div>
           </div>
         </div>
@@ -906,26 +1339,26 @@
   </div>
 </section>
 
-<!-- PROBLEMS -->
+<!-- ============= PROBLEMS ============= -->
 <section class="problems" id="problemas">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header reveal">
       <div class="section-tag">O problema</div>
       <h2>Você toca o negócio, não a recepção.</h2>
       <p>Mas hoje seu WhatsApp está cheio de mensagens repetidas, agendas conflitando e gente que confirma e some.</p>
     </div>
     <div class="problems-grid">
-      <div class="problem-card">
+      <div class="problem-card reveal">
         <div class="problem-icon">⏱️</div>
         <h3>2 horas por dia perdidas</h3>
         <p>Respondendo as mesmas perguntas: "qual o endereço?", "quanto custa?", "tem horário?". Você atende clientes ou marca agenda — não dá pra fazer os dois bem.</p>
       </div>
-      <div class="problem-card">
+      <div class="problem-card reveal">
         <div class="problem-icon">📉</div>
         <h3>30-40% de faltas e cancelamentos</h3>
         <p>O cliente esquece, não recebe lembrete, ou simplesmente não aparece. Cada falta é uma hora morta na sua agenda — e dinheiro que não volta.</p>
       </div>
-      <div class="problem-card">
+      <div class="problem-card reveal">
         <div class="problem-icon">😵</div>
         <h3>Agenda bagunçada</h3>
         <p>Conflito de horário, marcação duplicada, cliente reclamando que não foi avisado da remarcação. Falta de profissionalismo que afasta o cliente bom.</p>
@@ -934,70 +1367,73 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
+<!-- ============= HOW IT WORKS ============= -->
 <section class="how" id="como-funciona">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header reveal">
       <div class="section-tag">Como funciona</div>
-      <h2>Configura em 48 horas. Você não mexe em nada.</h2>
-      <p>A gente cuida de toda a parte técnica. Você continua usando o mesmo número de WhatsApp, com o mesmo Google Agenda. A diferença é que agora ele responde sozinho.</p>
+      <h2>Configuramos em 48 horas. Você não mexe em nada.</h2>
+      <p>Cuidamos de toda a parte técnica. Você continua usando o mesmo número de WhatsApp e o mesmo Google Agenda. A diferença é que agora ele responde sozinho.</p>
     </div>
     <div class="steps">
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">1</div>
-        <h3>Conversa inicial</h3>
+        <h3>Diagnóstico</h3>
         <p>15 minutos por vídeo. Entendemos seu fluxo, dúvidas frequentes, valores e horários.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">2</div>
         <h3>Configuração</h3>
-        <p>Conectamos seu WhatsApp ao nosso sistema, integramos seu Google Agenda e treinamos a IA com suas respostas.</p>
+        <p>Conectamos seu WhatsApp ao nosso sistema, integramos sua agenda e treinamos a IA.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">3</div>
         <h3>Teste de 24h</h3>
         <p>Rodamos com você acompanhando. Ajustamos tom de voz, FAQs e fluxos até estar perfeito.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">4</div>
         <h3>No ar</h3>
-        <p>Bot 24/7 marcando, cancelando, reagendando e enviando lembretes. Suporte humano sempre que precisar.</p>
+        <p>Bot 24/7 atendendo. Suporte humano sempre que precisar.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DEMO INTERATIVA -->
+<!-- ============= DEMO ============= -->
 <section class="demo-section" id="demo">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header reveal">
       <div class="section-tag">Demonstração ao vivo</div>
       <h2>Veja seu negócio funcionando.</h2>
-      <p>Escolha o tipo de negócio, coloque o nome da sua empresa e veja como o atendimento aconteceria. É exatamente assim que seus clientes seriam atendidos.</p>
+      <p>Escolha o tipo de negócio, coloque o nome da sua empresa e veja como seria o atendimento. É exatamente assim que seus clientes seriam atendidos.</p>
     </div>
-    <div class="demo-card">
+    <div class="demo-card reveal">
       <div class="demo-controls">
-        <p style="font-size: 12px; font-weight: 600; color: var(--gray-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;">1. Tipo de negócio</p>
+        <div class="demo-step-label">1. Tipo de negócio</div>
         <div class="demo-tabs" id="dt-tabs">
-          <button class="demo-tab active" data-niche="saude"><i class="ti">💆</i>Saúde & Estética</button>
-          <button class="demo-tab" data-niche="imobiliaria"><i class="ti">🏗️</i>Imobiliária / Construtora</button>
-          <button class="demo-tab" data-niche="condominio"><i class="ti">🏢</i>Condomínio / Síndico</button>
-          <button class="demo-tab" data-niche="outro"><i class="ti">✏️</i>Outro (personalizar)</button>
+          <button class="demo-tab active" data-niche="saude"><i>💆</i>Saúde & Estética</button>
+          <button class="demo-tab" data-niche="imobiliaria"><i>🏗️</i>Imobiliária / Construtora</button>
+          <button class="demo-tab" data-niche="condominio"><i>🏢</i>Condomínio / Síndico</button>
+          <button class="demo-tab" data-niche="outro"><i>✏️</i>Outro (personalizar)</button>
         </div>
-        <p style="font-size: 12px; font-weight: 600; color: var(--gray-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;">2. Personalize</p>
+
+        <div class="demo-step-label">2. Personalize</div>
         <div class="demo-form">
           <input type="text" id="dt-clinica" placeholder="Nome da empresa">
           <input type="text" id="dt-prof" placeholder="Nome do responsável">
           <input type="text" id="dt-cidade" placeholder="Cidade">
           <input type="text" id="dt-valor" placeholder="Valor (ex: R$ 250 ou Gratuito)">
-          <input type="text" id="dt-servico" class="full-width" placeholder="Tipo de serviço/atendimento (opcional — sobrescreve o padrão)">
+          <input type="text" id="dt-servico" class="full-width" placeholder="Tipo de serviço/atendimento (opcional)">
         </div>
         <p class="demo-hint" id="dt-hint">💡 Você escolheu "Outro". Preencha o campo de serviço acima para personalizar.</p>
       </div>
+
       <div class="demo-stage">
         <span class="demo-stage-name" id="dt-stage-name">Clínica Estética Bem-Estar — Dra. Júlia Reis</span>
         <span class="demo-stage-tag" id="dt-stage-tag">SAÚDE & ESTÉTICA</span>
       </div>
+
       <div class="demo-phone">
         <div class="demo-phone-header">
           <div class="demo-phone-avatar" id="dt-avatar">JR</div>
@@ -1014,7 +1450,8 @@
           <div class="demo-send">→</div>
         </div>
       </div>
-      <p style="font-size: 12px; font-weight: 600; color: var(--gray-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;">3. Cenário</p>
+
+      <div class="demo-step-label">3. Cenário</div>
       <div class="demo-scenarios" id="dt-scen">
         <button class="demo-scenario active" data-scenario="confirma">Confirmação 24h</button>
         <button class="demo-scenario" data-scenario="cancela">Cancelamento</button>
@@ -1028,76 +1465,137 @@
   </div>
 </section>
 
-<!-- PRICING -->
-<section class="pricing" id="planos">
+<!-- ============= SOLUÇÃO PERSONALIZADA ============= -->
+<section class="solution" id="solucao">
   <div class="container">
-    <div class="section-header">
-      <div class="section-tag">Planos</div>
-      <h2>Preço justo. Sem fidelidade.</h2>
-      <p>Sem letra miúda. Cancela quando quiser. Garantia de 30 dias — não gostou, devolução total.</p>
+    <div class="section-header reveal">
+      <div class="section-tag">Solução personalizada</div>
+      <h2>Cada operação tem seu próprio ritmo.<br>Sua automação também.</h2>
+      <p>Não vendemos pacote pronto. Antes de qualquer proposta, mapeamos sua operação, identificamos os gargalos e desenhamos a automação que faz sentido para o seu negócio.</p>
     </div>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-name">Essencial</div>
-        <div class="price-amount"><span class="currency">R$</span>247<span class="period">/mês</span></div>
-        <div class="price-setup">Setup único: R$ 497</div>
-        <p class="price-target">Para profissional autônomo ou pequeno negócio começando agora: estética, fisioterapia, advocacia, corretor de imóveis solo.</p>
-        <ul class="price-features">
-          <li>Até 80 atendimentos/mês</li>
-          <li>Agendamento automático</li>
-          <li>Cancelamento e reagendamento</li>
-          <li>Lembrete 24h antes</li>
-          <li>FAQ inteligente</li>
-          <li>Integração Google Agenda</li>
-          <li>Suporte por WhatsApp</li>
-        </ul>
-        <a href="https://wa.me/5513981523082?text=Quero%20saber%20mais%20sobre%20o%20plano%20Essencial" class="price-cta" target="_blank">Quero esse plano</a>
+
+    <!-- Diagnostic card -->
+    <div class="solution-diagnostic reveal">
+      <div class="solution-diag-header">
+        <div class="solution-diag-icon">🎯</div>
+        <div>
+          <h3>O que entra no diagnóstico</h3>
+          <p>15 minutos por vídeo. Sem custo, sem compromisso.</p>
+        </div>
       </div>
-      <div class="price-card featured">
-        <div class="price-badge">Mais escolhido</div>
-        <div class="price-name">Profissional</div>
-        <div class="price-amount"><span class="currency">R$</span>497<span class="period">/mês</span></div>
-        <div class="price-setup">Setup único: R$ 997</div>
-        <p class="price-target">Para pequenas empresas (2-3 pessoas), imobiliárias, escritórios e clínicas com volume alto de atendimentos.</p>
-        <ul class="price-features">
-          <li>80 a 200 atendimentos/mês</li>
-          <li>Tudo do plano Essencial</li>
-          <li>Multi-responsável (até 3)</li>
-          <li>Relatório mensal</li>
-          <li>Personalização avançada</li>
-          <li>Disparo de mensagens em massa</li>
-          <li>Suporte prioritário (até 30min)</li>
-        </ul>
-        <a href="https://wa.me/5513981523082?text=Quero%20saber%20mais%20sobre%20o%20plano%20Profissional" class="price-cta" target="_blank">Quero esse plano</a>
+
+      <div class="solution-variables">
+        <div class="solution-var">
+          <div class="solution-var-icon">📊</div>
+          <div class="solution-var-text">
+            <strong>Volume de mensagens</strong>
+            <span>Quantos contatos você recebe por dia/mês</span>
+          </div>
+        </div>
+        <div class="solution-var">
+          <div class="solution-var-icon">🔄</div>
+          <div class="solution-var-text">
+            <strong>Fluxo de atendimento</strong>
+            <span>Como suas conversas se desenrolam hoje</span>
+          </div>
+        </div>
+        <div class="solution-var">
+          <div class="solution-var-icon">👥</div>
+          <div class="solution-var-text">
+            <strong>Equipe envolvida</strong>
+            <span>Quantas pessoas atendem e quem faz o quê</span>
+          </div>
+        </div>
+        <div class="solution-var">
+          <div class="solution-var-icon">⚙️</div>
+          <div class="solution-var-text">
+            <strong>Regras de negócio</strong>
+            <span>Horários, valores, políticas, exceções</span>
+          </div>
+        </div>
+        <div class="solution-var">
+          <div class="solution-var-icon">🔗</div>
+          <div class="solution-var-text">
+            <strong>Integrações</strong>
+            <span>Agenda, CRM, ERP, sistemas próprios</span>
+          </div>
+        </div>
+        <div class="solution-var">
+          <div class="solution-var-icon">🎯</div>
+          <div class="solution-var-text">
+            <strong>Objetivos comerciais</strong>
+            <span>Onde você quer chegar nos próximos 6 meses</span>
+          </div>
+        </div>
       </div>
-      <div class="price-card">
-        <div class="price-name">Premium</div>
-        <div class="price-amount"><span class="currency">R$</span>897<span class="period">/mês</span></div>
-        <div class="price-setup">Setup único: R$ 1.997</div>
-        <p class="price-target">Para construtoras, redes de clínicas, condomínios e empresas com alta demanda ou múltiplas operações.</p>
-        <ul class="price-features">
-          <li>200+ atendimentos/mês</li>
-          <li>Tudo do plano Profissional</li>
-          <li>Multi-responsável ilimitado</li>
-          <li>Dashboard customizado</li>
-          <li>Recuperação de clientes inativos</li>
-          <li>Integração com sistemas externos</li>
-          <li>Suporte dedicado</li>
-        </ul>
-        <a href="https://wa.me/5513981523082?text=Quero%20saber%20mais%20sobre%20o%20plano%20Premium" class="price-cta" target="_blank">Quero esse plano</a>
+
+      <div class="solution-cta-box">
+        <div class="solution-cta-content">
+          <h3>Pronto pra ver como sua operação rodaria com automação?</h3>
+          <p>Receba uma proposta personalizada com escopo, prazo e investimento. Resposta em até 2h úteis.</p>
+        </div>
+        <a href="https://wa.me/5513981523082?text=Quero%20agendar%20um%20diagn%C3%B3stico%20gratuito%20da%20minha%20opera%C3%A7%C3%A3o" target="_blank" rel="noopener" class="solution-cta-btn">
+          Agendar diagnóstico →
+        </a>
+      </div>
+    </div>
+
+    <!-- Process flow -->
+    <div class="solution-process">
+      <div class="process-card reveal">
+        <div class="process-num">01 · DIAGNÓSTICO</div>
+        <h4>Conversa estratégica</h4>
+        <p>15 minutos por vídeo. Mapeamos sua operação, dores e objetivos. Sem custo.</p>
+        <span class="process-time">Dia 0</span>
+      </div>
+      <div class="process-card reveal">
+        <div class="process-num">02 · PROPOSTA</div>
+        <h4>Escopo personalizado</h4>
+        <p>Desenhamos a solução: fluxos, integrações, escopo e investimento. Você aprova antes de qualquer cobrança.</p>
+        <span class="process-time">Em até 2 dias</span>
+      </div>
+      <div class="process-card reveal">
+        <div class="process-num">03 · IMPLEMENTAÇÃO</div>
+        <h4>No ar em 48h</h4>
+        <p>Configuração, treinamento da IA, teste com você acompanhando e ativação. Suporte humano sempre disponível.</p>
+        <span class="process-time">48 horas</span>
+      </div>
+    </div>
+
+    <!-- Guarantees -->
+    <div class="solution-guarantees reveal">
+      <div class="guarantee">
+        <div class="guarantee-icon">✓</div>
+        <div class="guarantee-text">Diagnóstico gratuito</div>
+      </div>
+      <div class="guarantee">
+        <div class="guarantee-icon">✓</div>
+        <div class="guarantee-text">Sem fidelidade</div>
+      </div>
+      <div class="guarantee">
+        <div class="guarantee-icon">✓</div>
+        <div class="guarantee-text">Garantia de 30 dias</div>
+      </div>
+      <div class="guarantee">
+        <div class="guarantee-icon">✓</div>
+        <div class="guarantee-text">Suporte humano direto</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
+<!-- ============= FAQ ============= -->
 <section class="faq" id="faq">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header reveal">
       <div class="section-tag">Dúvidas frequentes</div>
       <h2>O que mais nos perguntam.</h2>
     </div>
     <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Quanto custa? Por que não tem preço fixo no site?<span class="faq-q-icon">+</span></div>
+        <div class="faq-a">Porque cada operação é diferente. O investimento depende do volume de atendimentos, integrações necessárias, complexidade dos fluxos e equipe envolvida. Após o diagnóstico (gratuito), você recebe uma proposta clara com escopo, prazo e valor — sem letra miúda.</div>
+      </div>
       <div class="faq-item">
         <div class="faq-q">O cliente percebe que está falando com um robô?<span class="faq-q-icon">+</span></div>
         <div class="faq-a">Geralmente não. Configuramos o tom de voz para imitar como você ou sua equipe responderia. E quando ele faz uma pergunta complexa que o bot não consegue resolver, transferimos automaticamente para você.</div>
@@ -1124,42 +1622,42 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">Funciona com qual sistema de agendamento?<span class="faq-q-icon">+</span></div>
-        <div class="faq-a">Google Agenda nativamente. Outros sistemas (Doctoralia, GestãoDS, sistemas próprios, ERPs) podemos integrar no plano Premium.</div>
+        <div class="faq-a">Google Agenda nativamente. Outros sistemas (Doctoralia, GestãoDS, sistemas próprios, ERPs) integramos como parte do escopo personalizado.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Vocês atendem em todo o Brasil?<span class="faq-q-icon">+</span></div>
-        <div class="faq-a">Sim. Todo o processo de configuração, testes e suporte é feito remotamente, por vídeo e WhatsApp. Atendemos clientes em qualquer estado do Brasil.</div>
+        <div class="faq-a">Sim. Todo o processo de diagnóstico, configuração e suporte é feito remotamente, por vídeo e WhatsApp. Atendemos clientes em qualquer estado do Brasil.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA FINAL -->
+<!-- ============= CTA FINAL ============= -->
 <section class="cta-final">
   <div class="container">
-    <h2>Comece com 30 dias de teste.</h2>
-    <p>Sem fidelidade, sem letra miúda. Se não for o que você espera, devolvemos seu dinheiro.</p>
+    <h2>Vamos montar a sua automação.</h2>
+    <p>Diagnóstico gratuito de 15 minutos. Você sai da conversa sabendo exatamente o que pode ser automatizado, em quanto tempo e quanto custa.</p>
     <div class="cta-final-buttons">
-      <a href="https://wa.me/5513981523082?text=Quero%20conhecer%20a%20Aira%20Group" class="cta-final-btn" target="_blank">
-        Falar com a Aira no WhatsApp →
+      <a href="https://wa.me/5513981523082?text=Quero%20agendar%20um%20diagn%C3%B3stico%20gratuito" class="cta-final-btn" target="_blank" rel="noopener">
+        Agendar diagnóstico no WhatsApp →
       </a>
-      <a href="https://www.instagram.com/aira.solutions/" class="cta-final-btn outline" target="_blank">
+      <a href="https://www.instagram.com/aira.solutions/" class="cta-final-btn outline" target="_blank" rel="noopener">
         Seguir no Instagram
       </a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ============= FOOTER ============= -->
 <footer>
   <div class="container">
     <div class="footer-grid">
       <div>
         <a href="#" class="logo">
           <span class="logo-mark"><img src="Logo_Aira_Insta.jpeg" alt="Aira Group"></span>
-          <div class="logo-text">Aira Group</div>
+          <span class="logo-text">Aira Group</span>
         </a>
-        <p class="footer-tag">Automação de WhatsApp para empresas e profissionais no Brasil. Tecnologia que devolve seu tempo.</p>
+        <p class="footer-tag">Automação de WhatsApp sob medida para empresas e profissionais no Brasil. Tecnologia que devolve seu tempo.</p>
         <div class="footer-social">
           <a href="https://www.instagram.com/aira.solutions/" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1180,13 +1678,13 @@
         <a href="#problemas">O problema</a>
         <a href="#como-funciona">Como funciona</a>
         <a href="#demo">Demo ao vivo</a>
-        <a href="#planos">Planos</a>
+        <a href="#solucao">Solução</a>
       </div>
       <div class="footer-col">
         <h4>Empresa</h4>
         <a href="#">Sobre nós</a>
         <a href="#faq">Dúvidas</a>
-        <a href="https://wa.me/5513981523082">Contato</a>
+        <a href="https://wa.me/5513981523082" target="_blank" rel="noopener">Contato</a>
         <a href="https://www.instagram.com/aira.solutions/" target="_blank" rel="noopener">Instagram</a>
       </div>
       <div class="footer-col">
@@ -1203,15 +1701,79 @@
   </div>
 </footer>
 
+<!-- ============= SCRIPTS ============= -->
 <script>
-// FAQ accordion
-document.querySelectorAll('.faq-item').forEach(item => {
-  item.addEventListener('click', () => {
-    item.classList.toggle('open');
+/* ===========================================
+   THEME TOGGLE
+   =========================================== */
+(function(){
+  const root = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+
+  function setTheme(t, persist){
+    root.setAttribute('data-theme', t);
+    if(persist) {
+      try { localStorage.setItem('aira-theme', t); } catch(e){}
+    }
+    // Update theme-color meta for mobile browser chrome
+    const meta = document.querySelector('meta[name="theme-color"]:not([media])') || document.createElement('meta');
+    meta.name = 'theme-color';
+    meta.content = t === 'dark' ? '#0a0e16' : '#ffffff';
+    if(!meta.parentNode) document.head.appendChild(meta);
+  }
+
+  toggle.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') || 'light';
+    setTheme(current === 'dark' ? 'light' : 'dark', true);
   });
+
+  // Respect system change if user hasn't manually picked
+  try {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener && mq.addEventListener('change', (e) => {
+      const saved = localStorage.getItem('aira-theme');
+      if(!saved) setTheme(e.matches ? 'dark' : 'light', false);
+    });
+  } catch(e){}
+})();
+
+/* ===========================================
+   FAQ ACCORDION
+   =========================================== */
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => item.classList.toggle('open'));
 });
 
-// DEMO interativa
+/* ===========================================
+   SCROLL REVEAL
+   =========================================== */
+(function(){
+  if(!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+/* ===========================================
+   NAV SHADOW ON SCROLL
+   =========================================== */
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.boxShadow = window.scrollY > 30 ? 'var(--shadow-sm)' : 'none';
+});
+
+/* ===========================================
+   DEMO INTERATIVA
+   =========================================== */
 (function(){
   const NICHES = {
     saude: {
@@ -1291,12 +1853,10 @@ document.querySelectorAll('.faq-item').forEach(item => {
 
   function updateUI(){
     const d = getData();
-    $stageName.textContent = `${d.clinica} — ${d.prof}`;
+    $stageName.textContent = d.clinica + ' — ' + d.prof;
     $stageTag.textContent = d.label;
-    $phoneName.textContent = `${d.clinica} · ${d.prof}`;
+    $phoneName.textContent = d.clinica + ' · ' + d.prof;
     $avatar.textContent = getInitials(d.prof);
-
-    // Highlight do campo de serviço quando "Outro" é selecionado
     if(currentNiche === 'outro'){
       $servico.classList.add('highlight-custom');
       $hint.classList.add('show');
@@ -1331,8 +1891,8 @@ document.querySelectorAll('.faq-item').forEach(item => {
     return new Promise(resolve => {
       const t = setTimeout(() => {
         const div = document.createElement('div');
-        div.className = `demo-bubble ${dir}`;
-        div.innerHTML = `${text}<span class="time">${nowTime()}</span>`;
+        div.className = 'demo-bubble ' + dir;
+        div.innerHTML = text + '<span class="time">' + nowTime() + '</span>';
         $chat.appendChild(div);
         $chat.scrollTop = $chat.scrollHeight;
         resolve();
@@ -1372,46 +1932,46 @@ document.querySelectorAll('.faq-item').forEach(item => {
 
   async function playConfirma(){
     const d = getData();
-    await addBubble(`Oi João! Aqui é da ${d.clinica}. Lembrete da sua ${d.servico} amanhã às 14h com ${d.prof}. 👋<br><br>Confirma sua presença?<br><br>1️⃣ Sim, confirmo<br>2️⃣ Reagendar<br>3️⃣ Cancelar`, 'out', 400);
+    await addBubble('Oi João! Aqui é da ' + d.clinica + '. Lembrete da sua ' + d.servico + ' amanhã às 14h com ' + d.prof + '. 👋<br><br>Confirma sua presença?<br><br>1️⃣ Sim, confirmo<br>2️⃣ Reagendar<br>3️⃣ Cancelar', 'out', 400);
     await showTyping(1800);
     await addBubble('1', 'in', 1500);
     removeTyping();
     await showTyping(800);
-    await addBubble(`Perfeito! ✅ Sua ${d.servico} está confirmada para amanhã às 14h. Te esperamos! 😊<br><br>📍 ${d.cidade} (endereço completo enviado por aqui)`, 'out', 1400);
+    await addBubble('Perfeito! ✅ Sua ' + d.servico + ' está confirmada para amanhã às 14h. Te esperamos! 😊<br><br>📍 ' + d.cidade + ' (endereço completo enviado por aqui)', 'out', 1400);
     removeTyping();
   }
 
   async function playCancela(){
     const d = getData();
-    await addBubble(`Oi, preciso cancelar meu agendamento de amanhã (${d.servico}). Surgiu um imprevisto 😞`, 'in', 400);
+    await addBubble('Oi, preciso cancelar meu agendamento de amanhã (' + d.servico + '). Surgiu um imprevisto 😞', 'in', 400);
     await showTyping(900);
-    await addBubble(`Sem problemas! 👍 Posso ajudar a reagendar pra você não perder o atendimento. Tem horário em algum desses dias?<br><br>📅 Quinta 14/05 — 10h ou 16h<br>📅 Sexta 15/05 — 09h ou 14h`, 'out', 1500);
+    await addBubble('Sem problemas! 👍 Posso ajudar a reagendar pra você não perder o atendimento. Tem horário em algum desses dias?<br><br>📅 Quinta 14/05 — 10h ou 16h<br>📅 Sexta 15/05 — 09h ou 14h', 'out', 1500);
     removeTyping();
     await showTyping(1800);
     await addBubble('Sexta às 14h fica ótimo!', 'in', 1500);
     removeTyping();
     await showTyping(800);
-    await addBubble(`Pronto! ✅ Reagendado para sexta 15/05 às 14h com ${d.prof}. Cancelei o horário antigo automaticamente. Te mando lembrete 24h antes!`, 'out', 1300);
+    await addBubble('Pronto! ✅ Reagendado para sexta 15/05 às 14h com ' + d.prof + '. Cancelei o horário antigo automaticamente. Te mando lembrete 24h antes!', 'out', 1300);
     removeTyping();
   }
 
   async function playNovo(){
     const d = getData();
-    await addBubble(`Oi, gostaria de agendar uma ${d.servico}. É a primeira vez que entro em contato.`, 'in', 400);
+    await addBubble('Oi, gostaria de agendar uma ' + d.servico + '. É a primeira vez que entro em contato.', 'in', 400);
     await showTyping(900);
-    await addBubble(`Olá! 👋 Bem-vindo(a) à ${d.clinica}. Tenho esses horários disponíveis com ${d.prof}:<br><br>1️⃣ Quarta 13/05 — 14h<br>2️⃣ Quinta 14/05 — 10h<br>3️⃣ Sexta 15/05 — 16h<br><br>Qual prefere?`, 'out', 1500);
+    await addBubble('Olá! 👋 Bem-vindo(a) à ' + d.clinica + '. Tenho esses horários disponíveis com ' + d.prof + ':<br><br>1️⃣ Quarta 13/05 — 14h<br>2️⃣ Quinta 14/05 — 10h<br>3️⃣ Sexta 15/05 — 16h<br><br>Qual prefere?', 'out', 1500);
     removeTyping();
     await showTyping(1500);
     await addBubble('Pode ser opção 2!', 'in', 1300);
     removeTyping();
     await showTyping(800);
-    await addBubble(`Perfeito! Pra confirmar, me passa: nome completo e telefone para contato?`, 'out', 1100);
+    await addBubble('Perfeito! Pra confirmar, me passa: nome completo e telefone para contato?', 'out', 1100);
     removeTyping();
     await showTyping(2200);
     await addBubble('João Silva, (13) 99999-0000', 'in', 1800);
     removeTyping();
     await showTyping(900);
-    await addBubble(`✅ Agendamento confirmado!<br><br>👤 João Silva<br>📅 Quinta 14/05 às 10h<br>🧑‍💼 ${d.prof}<br>📍 ${d.cidade} (endereço completo enviado por aqui)<br>💰 ${d.valor}<br><br>Você recebe lembrete 24h antes. Até lá! 😊`, 'out', 1400);
+    await addBubble('✅ Agendamento confirmado!<br><br>👤 João Silva<br>📅 Quinta 14/05 às 10h<br>🧑‍💼 ' + d.prof + '<br>📍 ' + d.cidade + ' (endereço completo enviado por aqui)<br>💰 ' + d.valor + '<br><br>Você recebe lembrete 24h antes. Até lá! 😊', 'out', 1400);
     removeTyping();
   }
 
@@ -1432,16 +1992,6 @@ document.querySelectorAll('.faq-item').forEach(item => {
   $reset.addEventListener('click', resetChat);
   updateUI();
 })();
-
-// Smooth nav highlight on scroll
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  if (window.scrollY > 50) {
-    nav.style.boxShadow = '0 4px 20px -8px rgba(0,0,0,0.08)';
-  } else {
-    nav.style.boxShadow = 'none';
-  }
-});
 </script>
 </body>
 </html>
